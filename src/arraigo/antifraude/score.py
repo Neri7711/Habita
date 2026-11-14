@@ -57,9 +57,16 @@ def construir_contexto(
         if clave in medianas or len(items) < config.min_anuncios_mediana:
             continue
         fechas: list[date] = [i.fecha_captura for i in items]
+        n_sinteticos = sum(i.fuente == "sintetico" for i in items)
+        if n_sinteticos:
+            # La etiqueta debe decir "sintéticos": calculos/banda_precio.py busca "sint" para avisar al usuario.
+            fuente = (f"mediana de anuncios sintéticos de ejemplo, no es dato de mercado "
+                      f"(n={len(items)}, {len(items) - n_sinteticos} reales)")
+        else:
+            fuente = f"mediana de anuncios capturados (n={len(items)})"
         medianas[clave] = Dato[float](
             valor=float(median(i.precio_mxn / i.m2 for i in items)),
-            fuente=f"mediana de anuncios capturados (n={len(items)})",
+            fuente=fuente,
             fecha_dato=max(fechas),
         )
 

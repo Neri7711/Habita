@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "traslado": {
+    "factor_rodeo": {"transporte_publico": 1.4, "auto": 1.3, "bici": 1.25},
+    "velocidad_kmh": {"transporte_publico": 17, "auto": 22, "bici": 14},
+    "fuente": "Supuesto del equipo: velocidades puerta a puerta en hora pico en CDMX, a validar",
+    "fecha_dato": "2026-11-14"
+  },
+  "calendario": {
+    "dias_laborales_mes": 22,
+    "horas_laborales_dia": 8,
+    "viajes_por_dia": 2,
+    "fuente": "Supuesto del equipo: 22 días laborales al mes y jornada de 8 horas",
+    "fecha_dato": "2026-11-14"
+  },
+  "pasajes": {
+    "tramos": [
+      {"hasta_km": 10, "pasajes": 1},
+      {"hasta_km": 20, "pasajes": 2},
+      {"hasta_km": null, "pasajes": 3}
+    ],
+    "fuente": "Supuesto del equipo: aproxima transbordos según la distancia de ruta, sin conocer la red",
+    "fecha_dato": "2026-11-14"
+  },
+  "transporte_publico": {
+    "tarifa_por_defecto": "metro",
+    "mapeo_estacion": {
+      "metro": "metro",
+      "metrobus": "metrobus",
+      "tren_ligero": "tren_ligero",
+      "cablebus": "cablebus",
+      "trolebus": "trolebus"
+    },
+    "fuente": "Supuesto del equipo: sin estaciones cercanas se usa la tarifa del Metro; Ecobici no cuenta como transporte público",
+    "fecha_dato": "2026-11-14"
+  },
+  "auto": {
+    "costo_por_km_mxn": 3.0,
+    "nota": "combustible (~$2.0/km) + mantenimiento (~$1.0/km); no incluye estacionamiento, seguro ni tenencia",
+    "fuente": "Supuesto del equipo: costo por kilómetro de un auto compacto, a validar",
+    "fecha_dato": "2026-11-14"
+  },
+  "tiempo": {
+    "factor_valor_tiempo": 1.0,
+    "fuente": "Supuesto del equipo: una hora de traslado vale una hora de ingreso",
+    "fecha_dato": "2026-11-14"
+  },
+  "servicios": {
+    "base_mxn": 900,
+    "por_recamara_mxn": 250,
+    "desglose_pct": {"luz": 0.30, "agua": 0.15, "gas": 0.25, "internet": 0.30},
+    "fuente": "supuesto del equipo",
+    "fecha_dato": "2026-11-14"
+  },
+  "compra": {
+    "mantenimiento_predial_anual_pct": 0.006,
+    "plazo_anios": 20,
+    "enganche_minimo_pct": 0.10,
+    "spread_sobre_tiie_pp": 3.5,
+    "tasa_respaldo_anual_pct": 11.5,
+    "serie_banxico": "SF43783",
+    "pago_max_pct_ingreso": 0.35,
+    "fuente": "Supuesto del equipo: plazo, spread y enganche mínimo habituales; la TIIE a 28 días (serie SF43783) viene de Banxico",
+    "fecha_dato": "2026-11-14"
+  },
+  "precio_justo": {
+    "umbral_sospechosamente_barato": 0.70,
+    "umbral_caro": 1.15,
+    "fuente": "Supuesto del equipo; el umbral 0.70 coincide con el de la spec 04 (antifraude)",
+    "fecha_dato": "2026-11-14"
+  }
+}
