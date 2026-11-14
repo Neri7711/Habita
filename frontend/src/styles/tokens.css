@@ -1,0 +1,64 @@
+:root {
+  /* Color (habita-diseno-web.md §2) */
+  --surface: #eeeff0;
+  --paper: #f7f6f3;
+  --ink: #131416;
+  --ink-muted: #5c5b57;
+  --on-ink: #f7f6f3;
+  --line: #d9d7d2;
+  --tezontle: #a8452b;
+  --tezontle-bright: #d7643f;
+  --tezontle-soft: #f2d3c4;
+  --tezontle-ink: #8a3720;
+  --xolo: #3f444c;
+  --sol: #f2c14e;
+  --durazno: #edb98a;
+  --cielo: #8db4f0;
+  --jacaranda: #9c7bd8;
+
+  /* Aceptados en frontend.md / propuestos en design.md */
+  --stone: #b9b6ae;
+  --jacaranda-soft: #e6ddf7;
+  --jacaranda-ink: #4b2f8a;
+  --ok-soft: #dcebdd;
+  --ok-ink: #2f5d3a;
+  --arbol-verde: #5e9e6b;
+  --arbol-morado: #7a5fb8;
+  --cielo-noche: #1e2a44;
+
+  /* Espaciado */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 96px;
+
+  /* Radios */
+  --r-sm: 8px;
+  --r-md: 16px;
+  --r-lg: 28px;
+  --r-pill: 999px;
+
+  /* Layout */
+  --contenedor: 1200px;
+  --pad-x: 20px;
+  --seccion: 64px;
+  --navbar-alto: 72px;
+
+  /* Tipografía */
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", system-ui, sans-serif;
+  --font-texto: "Inter Variable", "Inter", system-ui, sans-serif;
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --pad-x: 48px;
+    --seccion: 96px;
+  }
+}

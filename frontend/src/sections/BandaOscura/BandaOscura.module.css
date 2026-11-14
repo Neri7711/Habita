@@ -1,0 +1,43 @@
+.bloque {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-6);
+  padding: var(--sp-8) var(--sp-5);
+  background: var(--ink);
+  border-radius: var(--r-lg);
+  text-align: center;
+}
+
+/* Grecas de fondo: dispersas en las orillas, discretas para no competir con el texto. */
+.grecas { position: absolute; inset: 0; pointer-events: none; }
+.greca {
+  position: absolute;
+  width: 96px;
+  height: auto;
+  stroke: var(--tezontle-bright);
+  opacity: 0.35;
+}
+.greca:nth-child(1) { top: 24px; left: 24px; }
+.greca:nth-child(2) { top: 40px; right: 48px; width: 128px; }
+.greca:nth-child(3) { bottom: 32px; left: 64px; width: 112px; }
+.greca:nth-child(4) { bottom: 24px; right: 24px; }
+.greca:nth-child(5) { top: 50%; left: -16px; width: 80px; }
+.greca:nth-child(6) { top: 45%; right: -24px; width: 88px; }
+
+.titulo {
+  position: relative;
+  max-width: 18ch;
+  color: var(--on-ink);
+}
+/* Sin bloque de color: la palabra resaltada con fondo solo vive en el hero. */
+.acento { color: var(--tezontle-bright); }
+
+.bloque > a { position: relative; }
+
+@media (max-width: 767px) {
+  .bloque { padding: var(--sp-7) var(--sp-5); }
+  .greca:nth-child(n + 5) { display: none; }
+}

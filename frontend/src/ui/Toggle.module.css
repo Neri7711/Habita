@@ -1,0 +1,19 @@
+.grupo {
+  display: inline-flex;
+  padding: 4px;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+}
+.opcion {
+  height: 40px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  font: 600 15px/1 var(--font-texto);
+  color: var(--ink-muted);
+  transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out);
+}
+.activa { background: var(--ink); color: var(--on-ink); }

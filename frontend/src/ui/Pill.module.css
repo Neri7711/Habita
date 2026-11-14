@@ -1,0 +1,15 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: var(--tezontle-soft);
+  color: var(--tezontle-ink);
+}
+.punto {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tezontle);
+}
