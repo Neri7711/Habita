@@ -15,13 +15,6 @@ describe("scriptedChat", () => {
     expect(mensajes[0].texto).toContain("ejemplo");
   });
 
-  it("con datos de la API no dice que ignora el trabajo ni las mascotas", () => {
-    const mock = buscarOpciones(perfil, CATALOGO);
-    const { mensajes } = iniciar(perfil, { ...mock, explicacion: "Busqué con tu perfil completo." });
-    expect(mensajes[0].texto).not.toContain("aún no uso");
-    expect(mensajes[0].texto).toContain("sintéticos"); // las opciones del catálogo son esEjemplo
-  });
-
   it("iniciar sin resultados se queda en 'inicio' y ofrece reiniciar", () => {
     const { estado, mensajes } = iniciar(perfil, { opciones: [], mensajeSinResultados: "nada", avisos: [], fuentes: [], supuestos: [] });
     expect(estado.fase).toBe("inicio");

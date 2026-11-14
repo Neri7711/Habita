@@ -101,26 +101,14 @@ export function iniciar(perfil: PerfilRapido, resultado: ResultadoBusqueda): Pas
     ]);
     return { estado: { fase: "inicio", contador }, mensajes };
   }
-  // `explicacion` solo la manda la API real, que sí usa trabajo y mascotas; el mock filtra solo operación y presupuesto.
-  const deApi = resultado.explicacion !== undefined;
-  const nota = deApi
-    ? resultado.opciones[0].esEjemplo ? "Son anuncios de ejemplo (sintéticos), no inmuebles reales." : ""
-    : NOTA_FILTRO;
-  const deEjemplo = deApi ? "" : " de ejemplo";
   const { mensajes, contador } = numerar(0, [
     {
       autor: "agente",
-      texto: (
+      texto:
         resultado.opciones.length === 1
-<<<<<<< Updated upstream
-          ? `Encontré 1 opción${deEjemplo} para ti. ${nota}`
-          : `Encontré ${resultado.opciones.length} opciones${deEjemplo} para ti. Esta es la primera. ${nota}`
-      ).trim(),
-=======
           ? `Encontré 1 opción de ejemplo para ti. ${NOTA_FILTRO}`
           : `Encontré ${resultado.opciones.length} opciones de ejemplo para ti. Esta es la primera. ${NOTA_FILTRO}`,
       supuestos,
->>>>>>> Stashed changes
       tarjeta: resultado.opciones[0],
       cierre,
       sugerencias: sugerenciasDe(),
