@@ -8,10 +8,10 @@
 
 | Carril | Quién | Qué hace | Archivos que le pertenecen |
 |---|---|---|---|
-| G | _asignar_ | Implementar spec 02 (enriquecimiento de colonias) | `src/arraigo/pipeline/enriquecer/`, `scripts/enriquecer_colonias.py`, `tests/enriquecer/`, `src/arraigo/schemas/colonia.py` (solo si la spec lo pide), `data/raw/` (descargas nuevas), `data/raw/FUENTES.md` |
-| H | _asignar_ | Implementar spec 04 (antifraude) | `src/arraigo/antifraude/`, `scripts/evaluar_antifraude.py`, `data/raw/antifraude_reglas.json`, `tests/test_antifraude_*.py` |
-| I | _asignar_ | Escribir spec 03 (costo real + precio justo), solo documentos | `.kiro/specs/03-costo-real-precio-justo/*` |
-| J | _asignar_ | Escribir spec 05 (agente MCP), solo documentos | `.kiro/specs/05-agente-mcp/*` |
+| G | Kiro en laptop de Neri | Implementar spec 02 (enriquecimiento de colonias) | `src/arraigo/pipeline/enriquecer/`, `scripts/enriquecer_colonias.py`, `tests/enriquecer/`, `src/arraigo/schemas/colonia.py` (solo si la spec lo pide), `data/raw/` (descargas nuevas), `data/raw/FUENTES.md` |
+| H | Kiro en laptop de Neri | Implementar spec 04 (antifraude) | `src/arraigo/antifraude/`, `scripts/evaluar_antifraude.py`, `data/raw/antifraude_reglas.json`, `tests/test_antifraude_*.py` |
+| I | Kiro en laptop de Neri | Escribir spec 03 (costo real + precio justo), solo documentos | `.kiro/specs/03-costo-real-precio-justo/*` |
+| J | Kiro en laptop de Neri | Escribir spec 05 (agente MCP), solo documentos | `.kiro/specs/05-agente-mcp/*` |
 
 ### Prompt carril G
 ```
