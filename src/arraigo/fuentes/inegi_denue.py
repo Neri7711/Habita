@@ -1,5 +1,5 @@
 """INEGI DENUE: negocios por ubicación. Gratis, pero requiere un token que se obtiene registrándose en
-https://www.inegi.org.mx/app/api/denue/v1/tokenVerify.aspx. El token va en la variable de entorno INEGI_TOKEN.
+https://www.inegi.org.mx/servicios/api_denue.html (formulario "Generar token"). El token va en la variable de entorno INEGI_TOKEN.
 """
 
 from __future__ import annotations

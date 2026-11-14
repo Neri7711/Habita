@@ -16,8 +16,8 @@
 | `nominatim.py` | OpenStreetMap Nominatim (geocodificación, 1 req/s) | No | ✅ probado |
 | `overpass.py` | OpenStreetMap Overpass (mercados, parques, cultura, estaciones) | No | ✅ probado (servidores públicos a veces dan 502; hay espejos) |
 | `inside_airbnb.py` | Inside Airbnb CDMX, corte 2026-09-23 (CC BY 4.0) | No | URL verificada, sin descargar |
-| `inegi_denue.py` | INEGI DENUE (negocios cercanos) | Sí, gratis: `INEGI_TOKEN` | Falta token |
-| `banxico.py` | Banxico SIE (tasas, UDIS) | Sí, gratis: `BANXICO_TOKEN` | Falta token |
+| `inegi_denue.py` | INEGI DENUE (negocios cercanos) | Sí, gratis: `INEGI_TOKEN` | ✅ probado (469 negocios en 300 m de Roma Norte) |
+| `banxico.py` | Banxico SIE (tasas, UDIS) | Sí, gratis: `BANXICO_TOKEN` | ✅ probado (UDIS, serie SP68257) |
 
 Prueba en vivo: `uv run python scripts/probar_fuentes.py`.
 | anuncios_reales.csv | Captura manual del equipo (sin scraping) | por anuncio en `url_origen` | _pendiente_ | — |
