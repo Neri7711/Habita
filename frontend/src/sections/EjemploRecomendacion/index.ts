@@ -1,0 +1,1 @@
+export { EjemploRecomendacion } from "./EjemploRecomendacion";

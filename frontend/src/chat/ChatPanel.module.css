@@ -1,0 +1,94 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  min-width: 0;
+}
+
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.titulo:focus-visible { outline-offset: 4px; }
+
+.mensajes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+/* Usuario: burbuja a la derecha, neutra */
+.usuario { display: flex; justify-content: flex-end; }
+.burbujaUsuario {
+  max-width: min(520px, 90%);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md) var(--r-md) var(--r-sm) var(--r-md);
+}
+
+/* Agente: avatar Xolo + cuerpo */
+.agente {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: var(--sp-3);
+  align-items: start;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  min-height: 0;
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.cuerpoAgente {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+.autor {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-weight: 600;
+}
+.cargando { color: var(--ink-muted); }
+
+/* Tarjeta de opción */
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  max-width: 520px;
+  background: var(--surface);
+}
+.tarjetaTitulo { font: 600 18px/24px var(--font-texto); }
+.tarjetaMeta { color: var(--ink-muted); }
+.tarjetaMeta strong { color: var(--ink); font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.dato { font-size: 14px; line-height: 20px; }
+.fuente { color: var(--ink-muted); }
+
+/* Sugerencias: pills discretas (el tezontle se reserva al botón primario) */
+.acciones { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.sugerencia {
+  min-height: 40px;
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  font: 500 14px/20px var(--font-texto);
+  text-align: left;
+  transition: border-color 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+.sugerencia:hover { border-color: var(--ink-muted); background: var(--surface); }
+
+.pie {
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line);
+}

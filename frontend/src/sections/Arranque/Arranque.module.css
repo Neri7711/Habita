@@ -1,0 +1,97 @@
+/* Vista tipo app de /buscar: intro (pill + h1 + Xolo) a un lado, panel (formulario o chat) al otro. */
+.vista {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+  padding-top: var(--sp-7);
+  padding-bottom: calc(var(--seccion) / 2);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+.intro h1 { max-width: 16ch; }
+
+.lead { color: var(--ink-muted); max-width: 44ch; }
+
+.xolo {
+  width: 100%;
+  max-width: 160px;
+  aspect-ratio: 1;
+  height: auto;
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.panel {
+  min-width: 0;
+  padding: var(--sp-5);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.etiqueta { padding: 0; font: 500 14px/20px var(--font-texto); }
+.error { font: 400 14px/20px var(--font-texto); color: var(--tezontle-ink); }
+
+.enviar { align-self: flex-start; }
+
+/* Móvil y tablet con chat: el chat se queda con todo el alto útil del contenido. */
+@media (max-width: 1023px) {
+  .conChat { gap: var(--sp-5); }
+  .conChat .lead,
+  .conChat .xolo { display: none; }
+  .conChat .panel {
+    min-height: calc(100dvh - var(--navbar-alto) - var(--sp-7));
+    padding: var(--sp-4);
+  }
+}
+
+@media (min-width: 768px) {
+  .panel { padding: var(--sp-7); }
+}
+
+@media (min-width: 1024px) {
+  .vista {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--sp-7);
+    align-items: start;
+    padding-top: calc(var(--sp-6) * 2);
+  }
+  .intro {
+    position: sticky;
+    top: calc(var(--navbar-alto) + var(--sp-5));
+  }
+  .xolo { max-width: 360px; border-radius: var(--r-lg); }
+
+  /* Con chat: más ancho para la conversación y alto fijo; los mensajes hacen scroll propio. */
+  .conChat { grid-template-columns: 4fr 8fr; }
+  .conChat .xolo { max-width: 240px; }
+  .conChat .panel {
+    display: flex;
+    flex-direction: column;
+    height: clamp(560px, calc(100dvh - var(--navbar-alto) - var(--sp-7) * 2), 880px);
+    padding: var(--sp-6);
+  }
+}

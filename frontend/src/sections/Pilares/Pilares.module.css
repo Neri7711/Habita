@@ -1,0 +1,91 @@
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-5);
+}
+
+.encabezado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  max-width: 22ch;
+}
+
+.link {
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--r-sm);
+}
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.grid {
+  display: grid;
+  gap: var(--sp-5);
+  margin-top: var(--sp-7);
+}
+
+/* Reveal envuelve la card: que ocupe toda la celda para igualar alturas. */
+.celda > :global(.reveal) {
+  height: 100%;
+}
+
+.card {
+  height: 100%;
+}
+
+/* Sin desplazamiento en hover con movimiento reducido (el borde sí cambia). */
+@media (prefers-reduced-motion: reduce) {
+  .grid .card:hover {
+    transform: none;
+  }
+}
+
+.marca {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+/* Greca sobre un mosaico tezontle-soft: le da peso de ícono sin añadir otro acento. */
+.greca {
+  display: inline-flex;
+  padding: var(--sp-3);
+  border-radius: var(--r-sm);
+  background: var(--tezontle-soft);
+}
+.numero {
+  color: var(--ink-muted);
+}
+
+.titulo {
+  margin-top: var(--sp-5);
+}
+
+.texto {
+  margin-top: var(--sp-2);
+  color: var(--ink-muted);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 3 arriba, 2 abajo: rejilla de 6 columnas. */
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .celda {
+    grid-column: span 2;
+  }
+  .celda:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+}

@@ -1,0 +1,14 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  height: 28px;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  font: 500 14px/20px var(--font-texto);
+  white-space: nowrap;
+}
+.neutro { background: var(--surface); color: var(--ink); }
+.confianza { background: var(--ok-soft); color: var(--ok-ink); }
+.alerta { background: var(--tezontle-soft); color: var(--tezontle-ink); }
+.ia { background: var(--jacaranda-soft); color: var(--jacaranda-ink); }

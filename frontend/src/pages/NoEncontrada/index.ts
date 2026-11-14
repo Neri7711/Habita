@@ -1,0 +1,1 @@
+export { NoEncontrada } from "./NoEncontrada";

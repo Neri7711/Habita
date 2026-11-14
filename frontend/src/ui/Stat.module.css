@@ -1,0 +1,2 @@
+.stat { display: flex; flex-direction: column; gap: var(--sp-1); }
+.etiqueta { color: var(--ink-muted); }

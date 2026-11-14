@@ -1,0 +1,1 @@
+export { BandaOscura } from "./BandaOscura";

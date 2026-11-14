@@ -1,0 +1,29 @@
+/* La página ya abre con EncabezadoPagina (48px abajo): aquí solo el aire inferior. */
+.seccion { padding-bottom: var(--seccion); }
+
+.grid {
+  display: grid;
+  gap: var(--sp-6);
+  align-items: start;
+}
+
+.texto { color: var(--ink-muted); }
+
+.duda {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+}
+
+/* Escritorio: card a la izquierda (fija al hacer scroll), acordeón a la derecha. */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--sp-7);
+  }
+  .lateral {
+    position: sticky;
+    top: calc(var(--navbar-alto) + var(--sp-5));
+  }
+}
