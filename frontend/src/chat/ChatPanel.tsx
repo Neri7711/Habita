@@ -153,6 +153,9 @@ export function ChatPanel({ perfil, onEditar }: ChatPanelProps) {
   );
 }
 
+/** El back puede repetir avisos (costo real y precio justo traen los mismos); se muestran una vez. */
+const unicos = (xs: string[]) => [...new Set(xs)];
+
 function BurbujaAgente({ children }: { children: ReactNode }) {
   return (
     <div className={s.agente}>
@@ -186,7 +189,7 @@ function Cierre({ cierre }: { cierre: CierreResultados }) {
     <div className={s.cierre}>
       {avisos.length > 0 && (
         <ul className={s.avisos}>
-          {avisos.map((a) => (
+          {unicos(avisos).map((a) => (
             <li key={a}>{a}</li>
           ))}
         </ul>
@@ -230,7 +233,7 @@ function TarjetaOpcion({ opcion }: { opcion: OpcionBusqueda }) {
       </p>
       {opcion.avisos && opcion.avisos.length > 0 && (
         <ul className={s.avisos}>
-          {opcion.avisos.map((a) => (
+          {unicos(opcion.avisos).map((a) => (
             <li key={a}>{a}</li>
           ))}
         </ul>
