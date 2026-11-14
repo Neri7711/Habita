@@ -1,0 +1,49 @@
+# Tareas — Spec 04: Antifraude
+
+Requiere la spec 01 terminada (`data/processed/inmuebles.json` y `colonias.json`).
+
+- [ ] 1. Configuración y modelos
+  - [ ] 1.1 Crear `data/raw/antifraude_reglas.json` con pesos, umbrales y niveles de design.md
+    - _Requerimientos: R1.4, R2.2_
+  - [ ] 1.2 Crear `src/arraigo/antifraude/modelos.py` con `ConfigReglas`, `Senal`, `ResultadoAntifraude`, `ContextoAntifraude` y carga de la configuración
+    - _Requerimientos: R2.3, R5.4_
+  - [ ] 1.3 Crear `src/arraigo/antifraude/texto.py`: `normalizar`, `buscar_frase`, `extraer_telefonos`, ocultar teléfono
+    - _Requerimientos: R1.1_
+- [ ] 2. Reglas
+  - [ ] 2.1 Reglas de precio (`precio_muy_bajo`, `precio_algo_bajo`) con mediana por colonia y operación; `no_evaluable` sin `m2` o sin mediana
+    - _Requerimientos: R1.2, R1.3, R3.1, R3.2_
+  - [ ] 2.2 Reglas de texto: `deposito_antes_de_visitar`, `solo_whatsapp`, `urgencia_presion`, `sin_fotos_ni_visita`
+    - _Requerimientos: R1.2_
+  - [ ] 2.3 Reglas de contacto y ubicación: `whatsapp_extranjero`, `sin_direccion`, `sin_url_origen`
+    - _Requerimientos: R1.2_
+  - [ ] 2.4 Crear `src/arraigo/antifraude/duplicados.py` (Jaccard sobre shingles de 3 palabras) y la regla `descripcion_duplicada`
+    - _Requerimientos: R1.2_
+  - [ ] 2.5 Registrar todas las reglas en `reglas.py` (`REGISTRO`) leyendo pesos y umbrales solo de la configuración
+    - _Requerimientos: R1.1, R1.4_
+  - [ ] 2.6 Pruebas `tests/test_antifraude_reglas.py` y `tests/test_antifraude_duplicados.py` (activa / no activa / no evaluable; depósito de contrato no activa la regla)
+    - _Requerimientos: R6.1_
+- [ ] 3. Score explicable
+  - [ ] 3.1 Crear `score.py` con `evaluar_anuncio(inmueble, contexto)`: suma, tope 100, nivel, señales ordenadas
+    - _Requerimientos: R2.1, R2.2, R5.1_
+  - [ ] 3.2 Plantillas de `explicacion`, `resumen` y `recomendacion` en lenguaje simple; aviso de anuncio sintético; cita de fuente y fecha de la mediana
+    - _Requerimientos: R2.3, R2.4, R2.5, R2.6, R2.7, R2.8_
+  - [ ] 3.3 Función para evaluar un anuncio nuevo (texto, precio, colonia) con el mismo contexto
+    - _Requerimientos: R5.2_
+  - [ ] 3.4 Pruebas `tests/test_antifraude_score.py` (suma, tope, niveles 29/30/59/60, explicación no vacía, palabras prohibidas, sin señales)
+    - _Requerimientos: R6.2, R6.4_
+- [ ] 4. Evaluación
+  - [ ] 4.1 Crear `evaluacion.py`: matriz de confusión, precisión y recall, cortes todos / reales / sintéticos, contribución por regla, curva de umbral
+    - _Requerimientos: R4.1, R4.2, R4.3, R4.5_
+  - [ ] 4.2 Listar falsos positivos y falsos negativos con id, score y señales; generar `reporte_antifraude.json` y `.md` con las advertencias obligatorias
+    - _Requerimientos: R4.4, R4.6, R4.7_
+  - [ ] 4.3 Crear `scripts/evaluar_antifraude.py` que cargue `inmuebles.json` y `colonias.json`, escriba `antifraude.json` y el reporte (el script solo llama funciones de `arraigo`)
+    - _Requerimientos: R4.7, R5.3_
+  - [ ] 4.4 Pruebas `tests/test_antifraude_evaluacion.py` (matriz con datos a mano, metas sobre el dataset, `es_fraude_prueba` no afecta el score)
+    - _Requerimientos: R4.8, R6.3_
+- [ ] 5. Calibración y cierre
+  - [ ] 5.1 Revisar el reporte: ajustar pesos y umbral en la configuración según falsos positivos y negativos; no agregar reglas que copien una sola frase del generador
+    - _Requerimientos: R4.5_
+  - [ ] 5.2 `uv run pytest` en verde; `uv run python scripts/evaluar_antifraude.py` y revisar `reporte_antifraude.md` con el equipo
+    - _Requerimientos: R4.5, R6.3_
+  - [ ] 5.3 Dejar documentada en el reporte la interfaz `evaluar_anuncio` para la spec 05 (herramienta `score_fraude`)
+    - _Requerimientos: R5.1_
