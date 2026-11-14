@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import caja from "../assets/ilustraciones/xolo-caja.svg";
 import mapa from "../assets/ilustraciones/xolo-mapa.svg";
 import recostado from "../assets/ilustraciones/xolo-recostado.svg";
@@ -25,7 +26,10 @@ export function XoloScene({ escena, alt, className }: XoloSceneProps) {
   const { src, fondo } = ESCENAS[escena];
   if (!src) return <Placeholder fondo={fondo} etiqueta={escena} alt={alt} className={className} />;
   return (
-    <div className={[s.escena, className].filter(Boolean).join(" ")} style={{ background: fondo }}>
+    <div
+      className={[s.escena, className].filter(Boolean).join(" ")}
+      style={{ "--fondo-escena": fondo } as CSSProperties}
+    >
       <img src={src} alt={alt} className={s.img} loading="lazy" decoding="async" />
     </div>
   );

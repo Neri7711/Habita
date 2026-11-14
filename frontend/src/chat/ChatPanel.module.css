@@ -1,8 +1,10 @@
 .panel {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: var(--sp-5);
   min-width: 0;
+  min-height: 0;
 }
 
 .cabecera {
@@ -16,10 +18,14 @@
 .titulo:focus-visible { outline-offset: 4px; }
 
 .mensajes {
+  position: relative; /* offsetParent de los mensajes, para el scroll al nuevo */
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: var(--sp-4);
+  border-radius: var(--r-sm);
 }
+.mensajes:focus-visible { outline-offset: 4px; }
 
 /* Usuario: burbuja a la derecha, neutra */
 .usuario { display: flex; justify-content: flex-end; }
@@ -77,7 +83,7 @@
 /* Sugerencias: pills discretas (el tezontle se reserva al botón primario) */
 .acciones { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 .sugerencia {
-  min-height: 40px;
+  min-height: 44px;
   padding: var(--sp-2) var(--sp-4);
   background: var(--paper);
   border: 1px solid var(--line);
@@ -91,4 +97,31 @@
 .pie {
   padding-top: var(--sp-4);
   border-top: 1px solid var(--line);
+}
+
+/* Escritorio: el contenedor (Arranque) fija el alto; aquí scroll propio para los mensajes
+   y las sugerencias + pie quedan siempre visibles abajo. */
+@media (min-width: 1024px) {
+  .mensajes {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    padding-right: var(--sp-2);
+  }
+  .acciones, .pie { flex: none; }
+  /* Las sugerencias van en una sola fila con scroll horizontal para no quitarle alto a la conversación. */
+  .acciones {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: var(--sp-2);
+    scrollbar-width: thin;
+  }
+  .sugerencia { flex: none; white-space: nowrap; }
+  /* El botón Reintentar vive dentro de una burbuja: ahí sí puede envolver. */
+  .mensajes .acciones { flex-wrap: wrap; overflow: visible; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mensajes { scroll-behavior: auto; }
 }

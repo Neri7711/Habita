@@ -7,7 +7,7 @@
 .caja {
   position: relative;
   border-radius: var(--r-lg);
-  background: var(--cielo);
+  background-color: var(--cielo);
   overflow: hidden;
 }
 
@@ -129,6 +129,29 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
     align-items: end;
     gap: var(--sp-7);
-    padding-top: 72px;
+    padding-top: var(--sp-7);
   }
+  .titular { max-width: 16ch; }
+  /* Para que el hero quepa en una pantalla de laptop (1440×900): las islas no pasan de 1000px
+     y suben bajo el texto sobre el cielo vacío de su parte superior. */
+  .texto { position: relative; z-index: 1; }
+  /* Bajada y CTAs arriba, para dejar libre la zona donde suben las islas y sus etiquetas. */
+  .lado { align-self: start; padding-top: var(--sp-4); }
+  .acciones { flex-wrap: nowrap; column-gap: var(--sp-4); }
+  .secundario { white-space: nowrap; }
+  .islas {
+    max-width: 1000px;
+    margin: -72px auto 0;
+  }
+}
+
+/* La imagen trae grano de papel y el cielo de la caja es liso: se desvanecen sus bordes
+   para que no se vea el corte. Las islas quedan lejos de las orillas, no se pierde nada. */
+.imagen {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 14%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 14%);
+  mask-composite: intersect;
 }

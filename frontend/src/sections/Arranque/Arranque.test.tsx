@@ -21,7 +21,7 @@ describe("Arranque", () => {
     await user.click(screen.getByRole("radio", { name: "No" }));
     await user.click(screen.getByRole("button", { name: /buscar opciones/i }));
 
-    expect(await screen.findByText(/Encontré \d+ opción/)).toBeInTheDocument();
+    expect(await screen.findByText(/Encontré \d+ opci(ón|ones) /)).toBeInTheDocument();
     expect(screen.getByText("Datos de ejemplo")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: /editar mi búsqueda/i }));

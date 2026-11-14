@@ -90,3 +90,4 @@ a { color: inherit; }
 /* Bandas alternas a todo el ancho (§3). El contenido sigue en .contenedor. */
 .banda-surface { background: var(--surface); }
 .banda-paper { background: var(--paper); }
+

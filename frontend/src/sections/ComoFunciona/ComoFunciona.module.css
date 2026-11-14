@@ -8,9 +8,22 @@
   overflow: hidden;
   aspect-ratio: 1;
 }
-/* Las escenas son cuadradas: si el bloque es más ancho, se centran sobre su fondo sin recortarse. */
+/* Las escenas son cuadradas: llenan su bloque (en escritorio 2 y 3 son casi cuadrados, el recorte es mínimo)
+   para que no quede una franja de fondo liso junto al grano. */
 .escena img {
-  object-fit: contain;
+  object-fit: cover;
+}
+/* El paso 1 es más ancho que su escena cuadrada: se desvanecen los costados de la imagen
+   para que no se vea el borde entre el grano y el fondo liso. */
+.paso:first-child .escena {
+  display: flex;
+  justify-content: center;
+}
+.paso:first-child .escena img {
+  width: auto;
+  aspect-ratio: 1;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
 }
 
 .pie {

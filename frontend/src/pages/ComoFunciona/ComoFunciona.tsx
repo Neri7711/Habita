@@ -11,7 +11,7 @@ export function ComoFunciona() {
       <EncabezadoPagina
         pill="CÓMO FUNCIONA"
         titulo="Así te ayudamos a elegir dónde vivir"
-        bajada="Tres pasos, cinco cosas que revisamos por ti y un ejemplo real de cómo se ve una recomendación."
+        bajada="Tres pasos, cinco cosas que revisamos por ti y un ejemplo de cómo se ve una recomendación."
       />
       <div className="banda-paper">
         <Pasos />

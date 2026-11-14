@@ -30,6 +30,8 @@ export function ChatPanel({ perfil, onEditar }: ChatPanelProps) {
   const [vista, setVista] = useState<Vista>({ tipo: "cargando" });
   const [intento, setIntento] = useState(0);
   const tituloRef = useRef<HTMLHeadingElement>(null);
+  const mensajesRef = useRef<HTMLDivElement>(null);
+  const previosRef = useRef(0);
 
   useEffect(() => {
     tituloRef.current?.focus();
@@ -51,6 +53,16 @@ export function ChatPanel({ perfil, onEditar }: ChatPanelProps) {
     };
   }, [client, perfil, intento]);
 
+  // En escritorio los mensajes tienen scroll propio: lleva a la vista el primer mensaje nuevo.
+  const total = vista.tipo === "listo" ? vista.mensajes.length : 0;
+  useEffect(() => {
+    const el = mensajesRef.current;
+    const nuevo = el?.children[previosRef.current] as HTMLElement | undefined;
+    previosRef.current = total;
+    if (!el || !nuevo || el.scrollHeight <= el.clientHeight) return;
+    el.scrollTop = nuevo.offsetTop;
+  }, [total]);
+
   function elegir(intencion: Intencion) {
     // "Cambiar mi búsqueda" regresa al formulario con los valores previos.
     if (intencion.tipo === "reiniciar") return onEditar();
@@ -71,7 +83,15 @@ export function ChatPanel({ perfil, onEditar }: ChatPanelProps) {
         {client.origen === "mock" && <Chip variante="neutro">Datos de ejemplo</Chip>}
       </header>
 
-      <div className={s.mensajes} aria-live="polite" aria-busy={vista.tipo === "cargando"}>
+      <div
+        ref={mensajesRef}
+        className={s.mensajes}
+        role="log"
+        aria-label="Conversación con Habita"
+        aria-live="polite"
+        aria-busy={vista.tipo === "cargando"}
+        tabIndex={0}
+      >
         {vista.tipo === "cargando" && (
           <BurbujaAgente>
             <p className={s.cargando}>Buscando opciones de ejemplo para ti…</p>

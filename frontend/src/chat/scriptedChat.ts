@@ -87,7 +87,10 @@ export function iniciar(perfil: PerfilRapido, resultado: ResultadoBusqueda): Pas
   const { mensajes, contador } = numerar(0, [
     {
       autor: "agente",
-      texto: `Encontré ${resultado.opciones.length} opción(es) de ejemplo para ti. Esta es la primera. ${NOTA_FILTRO}`,
+      texto:
+        resultado.opciones.length === 1
+          ? `Encontré 1 opción de ejemplo para ti. ${NOTA_FILTRO}`
+          : `Encontré ${resultado.opciones.length} opciones de ejemplo para ti. Esta es la primera. ${NOTA_FILTRO}`,
       tarjeta: resultado.opciones[0],
       sugerencias: sugerenciasDe(),
     },

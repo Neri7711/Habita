@@ -1,0 +1,4 @@
+/* Bandas de Inicio: 96px del borde de la banda al contenido (64px en móvil), sumando el padding de .seccion. */
+.banda {
+  padding-block: calc(var(--seccion) / 2);
+}

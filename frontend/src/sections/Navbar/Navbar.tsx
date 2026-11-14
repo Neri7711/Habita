@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useScrolled } from "../../hooks";
 import { RUTAS } from "../../rutas";
 import { Logo } from "./Logo";
@@ -13,6 +13,7 @@ const ENLACES = [
 
 export function Navbar() {
   const scrolled = useScrolled();
+  const { pathname } = useLocation();
   const [abierto, setAbierto] = useState(false);
   const botonRef = useRef<HTMLButtonElement>(null);
 
@@ -67,9 +68,11 @@ export function Navbar() {
         <ul className="contenedor">{enlaces(s.enlaceMovil)}</ul>
       </div>
 
-      <Link to={RUTAS.buscar} className={`${s.hablar} ${s.flotante}`} onClick={cerrar}>
-        Hablar
-      </Link>
+      {pathname !== RUTAS.buscar && (
+        <Link to={RUTAS.buscar} className={`${s.hablar} ${s.flotante}`} onClick={cerrar}>
+          Hablar
+        </Link>
+      )}
     </header>
   );
 }

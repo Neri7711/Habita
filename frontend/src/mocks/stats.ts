@@ -1,3 +1,3 @@
-// PROVISIONAL: "500 anuncios revisados" es cifra de marketing del diseño, sin respaldo en los datos.
-// Reemplazar cuando el back publique el conteo real (spec 01 apunta a ~300).
-export const ANUNCIOS_PROVISIONAL = 500;
+// PROVISIONAL: el back genera 300 anuncios sintéticos (data/raw/anuncios_sinteticos.csv, spec 01).
+// Reemplazar por el conteo que exponga la API cuando exista.
+export const ANUNCIOS_PROVISIONAL = 300;

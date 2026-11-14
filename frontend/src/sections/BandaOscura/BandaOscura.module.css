@@ -39,5 +39,9 @@
 
 @media (max-width: 767px) {
   .bloque { padding: var(--sp-7) var(--sp-5); }
-  .greca:nth-child(n + 5) { display: none; }
+  /* En móvil el texto ocupa casi todo el ancho: solo quedan dos grecas pequeñas en esquinas opuestas. */
+  .greca { width: 56px; opacity: 0.25; }
+  .greca:nth-child(1) { top: 12px; left: 12px; }
+  .greca:nth-child(4) { bottom: 12px; right: 12px; }
+  .greca:nth-child(2), .greca:nth-child(3), .greca:nth-child(n + 5) { display: none; }
 }
