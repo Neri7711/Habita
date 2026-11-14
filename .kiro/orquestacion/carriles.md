@@ -1,5 +1,61 @@
 # Orquestación: trabajo en paralelo con Kiro
 
+> **Ronda 1 (A-F) TERMINADA** — en `main` quedó la versión de GB3tou (commit `81c4e51`) + specs 02 y 04.
+> La versión local de Kiro de A-C quedó respaldada en la rama local `respaldo/kiro-carriles-abc` (no se usa).
+> ⚠️ Para no duplicar trabajo otra vez: **cada carril tiene UN dueño** (columna "Quién"). Si no es tuyo, no lo corras.
+
+## Ronda 2
+
+| Carril | Quién | Qué hace | Archivos que le pertenecen |
+|---|---|---|---|
+| G | _asignar_ | Implementar spec 02 (enriquecimiento de colonias) | `src/arraigo/pipeline/enriquecer/`, `scripts/enriquecer_colonias.py`, `tests/enriquecer/`, `src/arraigo/schemas/colonia.py` (solo si la spec lo pide), `data/raw/` (descargas nuevas), `data/raw/FUENTES.md` |
+| H | _asignar_ | Implementar spec 04 (antifraude) | `src/arraigo/antifraude/`, `scripts/evaluar_antifraude.py`, `data/raw/antifraude_reglas.json`, `tests/test_antifraude_*.py` |
+| I | _asignar_ | Escribir spec 03 (costo real + precio justo), solo documentos | `.kiro/specs/03-costo-real-precio-justo/*` |
+| J | _asignar_ | Escribir spec 05 (agente MCP), solo documentos | `.kiro/specs/05-agente-mcp/*` |
+
+### Prompt carril G
+```
+Lee #steering, data/raw/FUENTES.md y .kiro/specs/02-enriquecimiento-colonias (requirements, design, tasks).
+Ejecuta las tareas de esa spec en orden. Usa los clientes de src/arraigo/fuentes/ (ya probados; tokens en INEGI_TOKEN y BANXICO_TOKEN).
+Solo puedes crear/editar: src/arraigo/pipeline/enriquecer/, scripts/enriquecer_colonias.py, tests/enriquecer/,
+data/raw/ (archivos nuevos descargados) y data/raw/FUENTES.md; src/arraigo/schemas/colonia.py solo si una tarea lo exige.
+No toques src/arraigo/antifraude/ ni .kiro/specs/03 o 05 (otros carriles). No hagas commit.
+Termina con uv run python scripts/enriquecer_colonias.py y uv run pytest, y marca las tareas en tasks.md.
+```
+
+### Prompt carril H
+```
+Lee #steering y .kiro/specs/04-antifraude (requirements, design, tasks).
+Ejecuta las tareas de esa spec en orden, usando data/processed/inmuebles.json (genéralo con uv run python scripts/cargar_dataset.py si no existe).
+Solo puedes crear/editar: src/arraigo/antifraude/, scripts/evaluar_antifraude.py, data/raw/antifraude_reglas.json, tests/test_antifraude_*.py.
+No toques schemas, pipeline ni otras specs. No hagas commit.
+Termina con uv run python scripts/evaluar_antifraude.py (muestra precisión y recall contra es_fraude_prueba) y uv run pytest; marca tasks.md.
+```
+
+### Prompt carril I
+```
+Usa el modo Spec. Lee #steering, .kiro/specs/01-modelo-datos y src/arraigo/schemas/ para usar los modelos reales.
+Crea .kiro/specs/03-costo-real-precio-justo/ (requirements.md, design.md, tasks.md, formato EARS en español) para:
+traslado estimado (haversine × factor de rodeo ÷ velocidad por modo; destino geocodificado con arraigo.fuentes.nominatim),
+costo de transporte con tarifas oficiales SEMOVI en tabla fija, tiempo valorizado (ingreso/hora × horas de traslado al mes),
+servicios (supuesto documentado), mensualidad de compra (amortización con tasa de referencia de Banxico vía arraigo.fuentes.banxico + enganche),
+y precio justo (precio/m2 vs mediana de la colonia, con banda "justo / caro / sospechosamente barato").
+Todo determinista, con fuente y supuestos explícitos. Código en src/arraigo/calculos/. Solo documentos, no escribas código.
+```
+
+### Prompt carril J
+```
+Usa el modo Spec. Lee #steering (sobre todo tech.md: Kiro es el LLM vía MCP) y las specs 01-04.
+Crea .kiro/specs/05-agente-mcp/ (requirements.md, design.md, tasks.md, formato EARS en español) para un servidor MCP en Python (paquete mcp, FastMCP)
+en src/arraigo/mcp_server.py con herramientas: buscar_inmuebles(perfil) con ranking por prioridades, costo_real, precio_justo, score_fraude, info_colonia,
+y alternativas_equilibradas (reubicación consciente). Cada respuesta incluye explicación, fuentes y avisos (sintético, ubicación aproximada).
+Incluye el registro en .kiro/settings/mcp.json y un guion de demo con 3 perfiles. No incluye front. Solo documentos, no escribas código.
+```
+
+---
+
+## Ronda 1 (histórico)
+
 Cada carril = **un chat/agente de Kiro distinto**, todos sobre este mismo repo.
 Regla de oro: **cada carril solo toca SUS archivos**. Nadie toca el front. Nadie hace commit ni push (eso lo hace Neri).
 
