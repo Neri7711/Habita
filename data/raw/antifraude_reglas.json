@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "umbral_alerta": 30,
+  "niveles": {"medio": 30, "alto": 60},
+  "min_anuncios_mediana": 5,
+  "reglas": {
+    "precio_muy_bajo": {"peso": 40, "ratio_max": 0.50},
+    "precio_algo_bajo": {"peso": 10, "ratio_min": 0.50, "ratio_max": 0.70},
+    "deposito_antes_de_visitar": {
+      "peso": 35,
+      "frases_directas": [
+        "\\b(deposit\\w*|apart\\w*|anticipo|transferenc\\w*)\\b[^.]{0,50}\\bantes de (ver|visitar|conocer)",
+        "\\bantes de (ver|visitar|conocer)\\b[^.]{0,50}\\b(deposit\\w*|apart\\w*|anticipo|transferenc\\w*)",
+        "\\bsin (ver|visitar)\\b[^.]{0,30}\\b(deposit\\w*|apart\\w*|anticipo)",
+        "\\bdespues del deposito\\b",
+        "\\b(deposit\\w*|anticipo)\\b[^.]{0,30}\\bpara (darte|enviarte|dar|mandarte) (la )?direccion"
+      ],
+      "frases_pago": [
+        "\\baparta con\\b",
+        "\\btransferencia para apartar\\b",
+        "\\banticipo\\b",
+        "\\bdeposit\\w* para apartar\\b"
+      ],
+      "frases_visita": ["\\bvisit\\w*", "\\bver el (departamento|lugar|inmueble)\\b", "\\bconocer\\b"]
+    },
+    "sin_direccion": {
+      "peso": 15,
+      "patrones_direccion": [
+        "\\b(calle|avenida|av|eje|calzada|periferico|cerrada|andador|privada)\\b",
+        "\\besquina con\\b",
+        "\\bentre calles?\\b",
+        "\\b(no|num|numero)\\.?\\s*\\d+"
+      ]
+    },
+    "solo_whatsapp": {
+      "peso": 15,
+      "frases": [
+        "\\b(solo|unicamente|exclusivamente)\\b( contacto)?( por| via| al)? whatsapp",
+        "\\bno (llamadas|llamar)\\b"
+      ],
+      "excepciones": ["@", "\\btelefono fijo\\b", "\\boficina\\b"]
+    },
+    "whatsapp_extranjero": {"peso": 20, "prefijo_local": "52"},
+    "descripcion_duplicada": {"peso": 20, "jaccard_min": 0.80, "min_palabras": 6, "dif_precio_max": 0.10},
+    "urgencia_presion": {
+      "peso": 10,
+      "frases": [
+        "\\bultima oportunidad\\b",
+        "\\bhoy mismo\\b",
+        "\\bse va rapido\\b",
+        "\\burge\\b",
+        "\\bprecio de remate\\b",
+        "\\bmuchos interesados\\b",
+        "\\bno lo pienses\\b"
+      ]
+    },
+    "sin_fotos_ni_visita": {
+      "peso": 20,
+      "frases": [
+        "\\bsin fotos\\b",
+        "\\bno se puede visitar\\b",
+        "\\bfotos por privado\\b",
+        "\\bte lo muestro despues de apartar\\b"
+      ]
+    },
+    "m2_inconsistente": {"peso": 30, "tolerancia": 0.15},
+    "sin_url_origen": {"peso": 5, "prefijo_fuente": "captura_manual"}
+  }
+}
+
