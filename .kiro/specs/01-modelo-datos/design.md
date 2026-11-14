@@ -5,9 +5,9 @@
 |---|---|---|
 | Validación | Pydantic v2 | Mismo modelo sirve luego como schema de herramientas MCP |
 | Almacenamiento | Archivos JSON en `data/processed/` | Cero infraestructura |
-| Origen de anuncios | **Mixto**: ~40-65 anuncios reales capturados a mano (3-5 por colonia) + generador sintético calibrado con ellos | No hay scraping ni tiempo para capturar 200+ a mano |
+| Origen de anuncios | **Mixto**: ~40 anuncios reales capturados a mano (3 por colonia) + generador sintético calibrado con ellos | No hay scraping ni tiempo para capturar 200+ a mano |
 | Precio m2 por colonia | Mediana de los anuncios **reales** de esa colonia | No existe fuente abierta por colonia; se declara así en `fuente` |
-| Centroides | Calculados desde el catálogo oficial de colonias (GeoJSON de Datos Abiertos CDMX) | Fuente oficial citable |
+| Centroides | Manuales: columnas `lat`,`lng` en `colonias_piloto.csv` | Son 13 colonias; GeoJSON + shapely no vale el tiempo. Se cita como aproximado |
 
 ## Modelos (`src/arraigo/schemas/`)
 
@@ -80,8 +80,7 @@ class Colonia(BaseModel):
 
 ## Pipeline (`src/arraigo/pipeline/`)
 ```
-data/raw/colonias_piloto.csv ─┐
-data/raw/colonias_cdmx.geojson ┴─► colonias.py: centroides ─────────────┐
+data/raw/colonias_piloto.csv ──► colonias.py: centroides (manuales) ─────────────┐
 data/raw/anuncios_reales.csv ──► generar_sinteticos.py ─► anuncios_sinteticos.csv
 data/raw/anuncios_*.csv ───────► cargar.py: validar cada fila ──────────┤
                                    ├─► data/processed/inmuebles.json

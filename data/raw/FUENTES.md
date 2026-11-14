@@ -6,7 +6,8 @@
 | Archivo | Fuente | URL | Fecha de descarga | Licencia |
 |---|---|---|---|---|
 | colonias_piloto.csv | Selección del equipo | — | 2026-11-14 | — |
-| colonias_cdmx.geojson | Datos Abiertos CDMX — "Colonias del IECM - 2022" (dataset `colonias-del-iecm-2022`) | https://datos.cdmx.gob.mx/dataset/colonias-del-iecm-2022 | _pendiente_ | CC-BY-4.0-ESP |
+| colonias_piloto.csv (`lat`,`lng`) | Centroides manuales aproximados del equipo (~300 m); el GeoJSON del IECM se descartó por tiempo | — | 2026-11-14 | — |
+| anuncios_sinteticos.csv | Generado por `scripts/generar_anuncios_sinteticos.py --seed 42` (medianas PROVISIONALES hasta tener reales) | — | 2026-11-14 | — |
 
 ## APIs conectadas (`src/arraigo/fuentes/`)
 

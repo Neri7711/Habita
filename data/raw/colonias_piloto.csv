@@ -1,14 +1,14 @@
-colonia,alcaldia,hipotesis_presion,rol
-Roma Norte,Cuauhtémoc,alta,zona_presionada
-Hipódromo,Cuauhtémoc,alta,zona_presionada
-Juárez,Cuauhtémoc,alta,zona_presionada
-Escandón I Sección,Miguel Hidalgo,alta,zona_presionada
-San Rafael,Cuauhtémoc,media,en_transicion
-Santa María la Ribera,Cuauhtémoc,media,en_transicion
-Tacubaya,Miguel Hidalgo,media,en_transicion
-Narvarte Poniente,Benito Juárez,media,alternativa
-Del Valle Centro,Benito Juárez,media,alternativa
-Portales Norte,Benito Juárez,baja,alternativa
-Álamos,Benito Juárez,baja,alternativa
-Moctezuma 2a Sección,Venustiano Carranza,baja,alternativa
-Lindavista,Gustavo A. Madero,baja,alternativa
+colonia,alcaldia,hipotesis_presion,rol,lat,lng
+Roma Norte,Cuauhtémoc,alta,zona_presionada,19.4195,-99.1620
+Hipódromo,Cuauhtémoc,alta,zona_presionada,19.4120,-99.1700
+Juárez,Cuauhtémoc,alta,zona_presionada,19.4270,-99.1600
+Escandón I Sección,Miguel Hidalgo,alta,zona_presionada,19.4030,-99.1790
+San Rafael,Cuauhtémoc,media,en_transicion,19.4390,-99.1610
+Santa María la Ribera,Cuauhtémoc,media,en_transicion,19.4510,-99.1580
+Tacubaya,Miguel Hidalgo,media,en_transicion,19.4030,-99.1880
+Narvarte Poniente,Benito Juárez,media,alternativa,19.3960,-99.1570
+Del Valle Centro,Benito Juárez,media,alternativa,19.3850,-99.1650
+Portales Norte,Benito Juárez,baja,alternativa,19.3700,-99.1450
+Álamos,Benito Juárez,baja,alternativa,19.3970,-99.1430
+Moctezuma 2a Sección,Venustiano Carranza,baja,alternativa,19.4300,-99.0950
+Lindavista,Gustavo A. Madero,baja,alternativa,19.4880,-99.1280
