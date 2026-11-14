@@ -6,7 +6,7 @@ export const PRESUPUESTO_MAX = 50_000_000;
 export interface EntradaFormulario {
   operacion: string;
   presupuesto: string;
-  destino: string;
+  destino: string; // id de ZonaTrabajo elegido en el <select>; "" si no eligió
   mascotas: boolean | null;
 }
 
@@ -21,7 +21,8 @@ export function parsearPresupuesto(texto: string): number | null {
   return /^\d+$/.test(limpio) ? Number(limpio) : null;
 }
 
-export function validarPerfilRapido(entrada: EntradaFormulario): ResultadoValidacion {
+/** `idsZonas`: ids válidos de la lista que regresó `listarZonas()`; el destino debe ser uno de ellos. */
+export function validarPerfilRapido(entrada: EntradaFormulario, idsZonas: readonly string[]): ResultadoValidacion {
   const errores: Partial<Record<CampoFormulario, string>> = {};
 
   if (entrada.operacion !== "renta" && entrada.operacion !== "compra") {
@@ -35,9 +36,10 @@ export function validarPerfilRapido(entrada: EntradaFormulario): ResultadoValida
     errores.presupuesto = "El presupuesto debe estar entre $1,000 y $50,000,000.";
   }
 
-  const destino = entrada.destino.trim();
-  if (destino.length < 2 || destino.length > 120) {
-    errores.destino = "Cuéntanos dónde trabajas (entre 2 y 120 caracteres).";
+  if (entrada.destino === "") {
+    errores.destino = "Elige la zona donde trabajas.";
+  } else if (!idsZonas.includes(entrada.destino)) {
+    errores.destino = "Elige una zona de la lista.";
   }
 
   if (typeof entrada.mascotas !== "boolean") {
@@ -50,7 +52,7 @@ export function validarPerfilRapido(entrada: EntradaFormulario): ResultadoValida
     perfil: {
       operacion: entrada.operacion as PerfilRapido["operacion"],
       presupuesto_max_mxn: presupuesto as number,
-      destino_trabajo: destino,
+      destino_trabajo: entrada.destino,
       mascotas: entrada.mascotas as boolean,
     },
   };

@@ -9,6 +9,8 @@ import {
 import { XoloScene } from "../../illustrations";
 import { Button, Input, Pill, Toggle } from "../../ui";
 import s from "./Arranque.module.css";
+import { CampoZona } from "./CampoZona";
+import { useZonas } from "./useZonas";
 
 type Errores = Partial<Record<CampoFormulario, string>>;
 type Mascotas = "si" | "no" | "";
@@ -33,6 +35,7 @@ export function Arranque() {
   const formRef = useRef<HTMLFormElement>(null);
   const regresoRef = useRef(false);
   const mascotasErrorId = useId();
+  const { estado: zonas, reintentar: reintentarZonas } = useZonas();
 
   // Al volver del chat, el foco regresa al primer control del formulario.
   useEffect(() => {
@@ -44,7 +47,7 @@ export function Arranque() {
 
   function enfocar(campo: CampoFormulario) {
     const sel = `[data-campo="${campo}"]`;
-    formRef.current?.querySelector<HTMLElement>(`${sel} input, ${sel} button`)?.focus();
+    formRef.current?.querySelector<HTMLElement>(`${sel} input, ${sel} select, ${sel} button`)?.focus();
   }
 
   function enviar(e: FormEvent) {
@@ -55,7 +58,8 @@ export function Arranque() {
       destino,
       mascotas: mascotas === "" ? null : mascotas === "si",
     };
-    const resultado = validarPerfilRapido(entrada);
+    const idsZonas = zonas.fase === "listo" ? zonas.zonas.map((z) => z.id) : [];
+    const resultado = validarPerfilRapido(entrada, idsZonas);
     if (!resultado.ok) {
       setErrores(resultado.errores);
       const primero = ORDEN_CAMPOS.find((c) => resultado.errores[c]);
@@ -107,13 +111,12 @@ export function Arranque() {
             </div>
 
             <div data-campo="destino">
-              <Input
-                etiqueta="¿Dónde trabajas?"
-                autoComplete="off"
-                placeholder="Ej. Reforma, Santa Fe, Polanco"
-                value={destino}
-                onChange={(e) => setDestino(e.target.value)}
+              <CampoZona
+                estado={zonas}
+                valor={destino}
+                onChange={setDestino}
                 error={errores.destino}
+                onReintentar={reintentarZonas}
               />
             </div>
 

@@ -1,14 +1,16 @@
 import { describe, expect, it } from "vitest";
 import { validarPerfilRapido, type EntradaFormulario } from "./validacion";
+import { ZONAS_TRABAJO } from "./zonas";
 
-const valida: EntradaFormulario = { operacion: "renta", presupuesto: "12500", destino: "Polanco", mascotas: false };
-const con = (e: Partial<EntradaFormulario>) => validarPerfilRapido({ ...valida, ...e });
+const IDS = ZONAS_TRABAJO.map((z) => z.id);
+const valida: EntradaFormulario = { operacion: "renta", presupuesto: "12500", destino: "polanco", mascotas: false };
+const con = (e: Partial<EntradaFormulario>) => validarPerfilRapido({ ...valida, ...e }, IDS);
 
 describe("validarPerfilRapido", () => {
-  it("acepta una entrada válida", () => {
-    expect(validarPerfilRapido(valida)).toEqual({
+  it("acepta una entrada válida y envía el id de la zona", () => {
+    expect(validarPerfilRapido(valida, IDS)).toEqual({
       ok: true,
-      perfil: { operacion: "renta", presupuesto_max_mxn: 12_500, destino_trabajo: "Polanco", mascotas: false },
+      perfil: { operacion: "renta", presupuesto_max_mxn: 12_500, destino_trabajo: "polanco", mascotas: false },
     });
   });
 
@@ -22,13 +24,17 @@ describe("validarPerfilRapido", () => {
     if (!r.ok) expect(r.errores.presupuesto).toBeTruthy();
   });
 
-  it("valida el destino tras trim: 1 y 121 caracteres fallan, 2 y 120 pasan", () => {
-    expect(con({ destino: "a" }).ok).toBe(false);
-    expect(con({ destino: "  a  " }).ok).toBe(false);
-    expect(con({ destino: "" }).ok).toBe(false);
-    expect(con({ destino: "a".repeat(121) }).ok).toBe(false);
-    expect(con({ destino: "ab" }).ok).toBe(true);
-    expect(con({ destino: "a".repeat(120) }).ok).toBe(true);
+  it("el destino es obligatorio", () => {
+    const r = con({ destino: "" });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errores.destino).toBe("Elige la zona donde trabajas.");
+  });
+
+  it("el destino debe ser un id de la lista", () => {
+    const r = con({ destino: "Polanco" }); // nombre, no id
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errores.destino).toBe("Elige una zona de la lista.");
+    expect(validarPerfilRapido(valida, []).ok).toBe(false); // sin zonas cargadas no hay destino válido
   });
 
   it("exige mascotas y operación", () => {
@@ -38,7 +44,7 @@ describe("validarPerfilRapido", () => {
   });
 
   it("reporta todos los campos con error a la vez", () => {
-    const r = validarPerfilRapido({ operacion: "x", presupuesto: "", destino: "", mascotas: null });
+    const r = validarPerfilRapido({ operacion: "x", presupuesto: "", destino: "", mascotas: null }, IDS);
     expect(r.ok).toBe(false);
     if (!r.ok) expect(Object.keys(r.errores)).toHaveLength(4);
   });
