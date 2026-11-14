@@ -8,6 +8,17 @@ import s from "./Colonias.module.css";
 
 const plural = (n: number) => `${n} ${n === 1 ? "colonia" : "colonias"}`;
 
+/** Indicador 0–1 calculado por el back (spec 02). Mismo umbral de "alta" (0.75) que las tarjetas de búsqueda. */
+export function ChipPresion({ valor }: { valor?: number | null }) {
+  if (valor === null || valor === undefined) return <Chip variante="neutro">Sin dato</Chip>;
+  const nivel = valor >= 0.75 ? "Alta" : valor >= 0.5 ? "Media" : "Baja";
+  return (
+    <Chip variante={nivel === "Alta" ? "alerta" : "neutro"}>
+      {nivel} ({valor.toFixed(2)} de 1)
+    </Chip>
+  );
+}
+
 /** Lista de colonias piloto por alcaldía. No muestra `hipotesis_presion` ni `rol` (hipótesis del equipo). */
 export function ListaColonias({ estado }: { estado: EstadoColonias }) {
   const { origen } = useClient();
@@ -49,7 +60,7 @@ export function ListaColonias({ estado }: { estado: EstadoColonias }) {
                           <dl className={s.dato}>
                             <dt className="t-small">Presión de gentrificación</dt>
                             <dd>
-                              <Chip variante="neutro">Próximamente</Chip>
+                              <ChipPresion valor={c.presion_gentrificacion} />
                             </dd>
                           </dl>
                         </Card>

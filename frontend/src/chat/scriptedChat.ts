@@ -85,7 +85,8 @@ export function etiquetaIntencion(i: Intencion): string {
 export function iniciar(perfil: PerfilRapido, resultado: ResultadoBusqueda): Paso {
   const supuestos = resultado.supuestos;
   const cierre: CierreResultados = {
-    avisos: resultado.avisos,
+    // Los avisos que ya salen en la tarjeta de una opción no se repiten al final.
+    avisos: resultado.avisos.filter((a) => !resultado.opciones.some((o) => o.avisos?.includes(a))),
     fuentes: resultado.fuentes,
     alternativas: resultado.alternativas?.explicacion,
   };
@@ -101,13 +102,15 @@ export function iniciar(perfil: PerfilRapido, resultado: ResultadoBusqueda): Pas
     ]);
     return { estado: { fase: "inicio", contador }, mensajes };
   }
+  // Solo la API real manda `explicacion`, y esa sí usa trabajo y mascotas; NOTA_FILTRO describe al mock.
+  const nota = resultado.explicacion !== undefined ? "" : ` ${NOTA_FILTRO}`;
   const { mensajes, contador } = numerar(0, [
     {
       autor: "agente",
       texto:
         resultado.opciones.length === 1
-          ? `Encontré 1 opción de ejemplo para ti. ${NOTA_FILTRO}`
-          : `Encontré ${resultado.opciones.length} opciones de ejemplo para ti. Esta es la primera. ${NOTA_FILTRO}`,
+          ? `Encontré 1 opción de ejemplo para ti.${nota}`
+          : `Encontré ${resultado.opciones.length} opciones de ejemplo para ti. Esta es la primera.${nota}`,
       supuestos,
       tarjeta: resultado.opciones[0],
       cierre,

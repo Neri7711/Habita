@@ -15,6 +15,23 @@ describe("scriptedChat", () => {
     expect(mensajes[0].texto).toContain("ejemplo");
   });
 
+  it("con datos de la API no dice que ignora el trabajo ni las mascotas", () => {
+    const { mensajes } = iniciar(perfil, { ...buscarOpciones(perfil, CATALOGO), explicacion: "Busqué con tu perfil." });
+    expect(mensajes[0].texto).not.toContain("aún no uso");
+    expect(mensajes[0].texto).toContain("de ejemplo"); // los anuncios siguen siendo sintéticos
+  });
+
+  it("los avisos generales no repiten los que ya trae la tarjeta", () => {
+    const mock = buscarOpciones(perfil, CATALOGO);
+    const opciones = mock.opciones.map((o) => ({ ...o, avisos: ["Es sintético."] }));
+    const { mensajes } = iniciar(perfil, { ...mock, opciones, avisos: ["Es sintético.", "Otro aviso."] });
+    expect(mensajes[0].cierre?.avisos).toEqual(["Otro aviso."]);
+  });
+
+  it("con el mock conserva la nota de que solo filtra operación y presupuesto", () => {
+    expect(inicial().mensajes[0].texto).toContain("aún no uso");
+  });
+
   it("iniciar sin resultados se queda en 'inicio' y ofrece reiniciar", () => {
     const { estado, mensajes } = iniciar(perfil, { opciones: [], mensajeSinResultados: "nada", avisos: [], fuentes: [], supuestos: [] });
     expect(estado.fase).toBe("inicio");
