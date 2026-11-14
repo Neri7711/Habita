@@ -93,3 +93,21 @@ def test_determinista():
 def test_anuncio_nuevo():
     r = evaluar_anuncio_nuevo("Urge. Sin fotos.", 20000, "Roma Norte", contexto(), m2=50)
     assert r.score_riesgo == 30 and r.id == "nuevo"
+
+
+def _contexto_desde_dataset(fuente: str, n: int = 5):
+    from arraigo.antifraude.score import construir_contexto
+
+    anuncios = [anuncio(id=f"m{k}", fuente=fuente, precio_mxn=20000 + k * 100) for k in range(n)]
+    return construir_contexto(anuncios, [], config())
+
+
+def test_mediana_de_sinteticos_se_etiqueta_como_sintetica():
+    dato = _contexto_desde_dataset("sintetico").medianas_m2[("roma norte", Operacion.renta)]
+    assert "sint" in dato.fuente.lower()  # banda_precio.py depende de esto para avisar al usuario
+    assert "capturados" not in dato.fuente
+
+
+def test_mediana_de_reales_se_etiqueta_como_capturada():
+    dato = _contexto_desde_dataset("captura_manual:portal").medianas_m2[("roma norte", Operacion.renta)]
+    assert dato.fuente == "mediana de anuncios capturados (n=5)"
