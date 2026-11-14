@@ -3,9 +3,9 @@
 ## Antes de presentar (5 min)
 ```bash
 uv sync
-uv run python scripts/cargar_dataset.py
-uv run python scripts/calcular_costos.py
-uv run python scripts/enriquecer_colonias.py   # cuando la spec 02 esté integrada
+uv run python scripts/cargar_dataset.py        # 1) anuncios + colonias base
+uv run python scripts/enriquecer_colonias.py   # 2) transporte, gentrificación, comunidad (necesita internet + INEGI_TOKEN; ~1-2 min)
+uv run python scripts/calcular_costos.py       # 3) costo real y precio justo (necesita BANXICO_TOKEN)
 uv run pytest -q
 ```
 - Kiro abierto en el repo, con el servidor MCP `arraigo` activo (panel MCP en verde). Ver `.kiro/settings/mcp.json`.
@@ -40,10 +40,18 @@ Dato para el jurado: **detecta 25 de 25 fraudes de prueba, con 2 falsas alarmas*
 Qué señalar: **mensualidad estimada con la tasa real de Banxico** (TIIE + 3.5 pts ≈ 10% anual), sin ser asesoría hipotecaria.
 
 ## 4. Comunidad y reubicación consciente (45 s), el impacto social
-> ¿Qué tiene Roma Norte para alguien que llega? ¿Hay alguna alternativa con menos presión de gentrificación?
+> Voy a trabajar en Paseo de la Reforma, gano $60,000, quiero rentar con un tope de $22,000, me muevo en transporte
+> público y bici y no quiero más de 35 minutos. Me importa la comunidad, luego el traslado y luego el precio.
 
-Qué señalar: datos de **comunidad** (mercados, parques, cultura y comercio local del DENUE) y la **alternativa equilibrada**:
-"si te importa no empujar el desplazamiento, mira esta colonia con costo y traslado similares".
+Qué pasa (probado):
+- El #1 sale en **Juárez** (4 min al trabajo, 82 lugares de comunidad y transporte cerca), **pero el agente avisa:
+  "Esta colonia está bajo fuerte presión de gentrificación"**.
+- Luego pedir: *"¿Hay alguna alternativa más equilibrada?"* → **San Rafael**, Escandón I Sección y Narvarte Poniente
+  cumplen lo que buscas con menos presión.
+- Dato de comunidad concreto: "para conocer la colonia, empieza por el mercado…" (OpenStreetMap + comercio local de INEGI DENUE).
+
+Presión de gentrificación calculada (0-1; Airbnb + Censo 2010→2020): Juárez 0.83, Roma Norte 0.81, Álamos 0.72,
+Hipódromo 0.72 … Del Valle Centro 0.48, Lindavista 0.48.
 
 ## Cierre (15 s)
 "Todo cálculo es código determinista con fuente citada: Datos Abiertos CDMX, INEGI, Banxico, OpenStreetMap, Inside Airbnb.

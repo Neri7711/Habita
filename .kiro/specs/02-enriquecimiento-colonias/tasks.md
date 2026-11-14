@@ -2,14 +2,14 @@
 
 Prerrequisito: spec 01 terminada (esquemas, `pipeline/colonias.py`, `data/processed/colonias.json`).
 
-- [ ] 1. Base común
-  - [ ] 1.1 Revisar `src/arraigo/schemas/colonia.py` y ampliar solo lo que falte (`Modo`, `Estacion`, `Nivel`, `NivelRiesgo`, `PuntoComunidad`, `ComercioLocal`, `PuntosComunidad`, `PresionGentrificacion`, detalle de delitos), según design.md
+- [x] 1. Base común
+  - [x] 1.1 Revisar `src/arraigo/schemas/colonia.py` y ampliar solo lo que falte (`Modo`, `Estacion`, `Nivel`, `NivelRiesgo`, `PuntoComunidad`, `ComercioLocal`, `PuntosComunidad`, `PresionGentrificacion`, detalle de delitos), según design.md
     - _Requerimientos: R6.1, R8.4_
-  - [ ] 1.2 Crear `src/arraigo/pipeline/enriquecer/geo.py`: `haversine_m`, `asignar_a_colonia` (STRtree), `area_km2`
+  - [x] 1.2 Crear `src/arraigo/pipeline/enriquecer/geo.py`: `haversine_m`, `asignar_a_colonia` (STRtree), `area_km2`
     - _Requerimientos: R1.2, R2.1, R5.2_
-  - [ ] 1.3 Crear `src/arraigo/pipeline/enriquecer/normalizar.py`: `rango_percentil`
+  - [x] 1.3 Crear `src/arraigo/pipeline/enriquecer/normalizar.py`: `rango_percentil`
     - _Requerimientos: R1.3, R5.4_
-  - [ ] 1.4 Pruebas `tests/enriquecer/test_geo.py` y `test_normalizar.py`
+  - [x] 1.4 Pruebas `tests/enriquecer/test_geo.py` y `test_normalizar.py`
     - _Requerimientos: R8.1_
 - [ ] 2. Delitos
   - [ ] 2.1 Buscar con `datos_cdmx.buscar_datasets` el dataset de carpetas FGJ, fijar nombre y recurso CSV, y anotarlos en `data/raw/FUENTES.md` (URL, fecha, licencia)
@@ -18,14 +18,14 @@ Prerrequisito: spec 01 terminada (esquemas, `pipeline/colonias.py`, `data/proces
     - _Requerimientos: R1.2, R1.3, R1.4, R1.5, R1.6_
   - [ ] 2.3 Pruebas `test_delitos.py` con datos de ejemplo
     - _Requerimientos: R8.1_
-- [ ] 3. Transporte
-  - [ ] 3.1 Fijar el recurso GTFS de SEMOVI en Datos Abiertos CDMX y la URL del feed de estaciones Ecobici; anotarlos en `FUENTES.md`
+- [x] 3. Transporte
+  - [x] 3.1 Fijar el recurso GTFS de SEMOVI en Datos Abiertos CDMX y la URL del feed de estaciones Ecobici; anotarlos en `FUENTES.md`
     - _Requerimientos: R2.2, R6.6_
-  - [ ] 3.2 Crear `enriquecer/transporte.py`: leer `stops.txt`, inferir modo, sumar Ecobici, filtrar a 800 m, fusionar duplicados, ordenar
+  - [x] 3.2 Crear `enriquecer/transporte.py`: leer `stops.txt`, inferir modo, sumar Ecobici, filtrar a 800 m, fusionar duplicados, ordenar
     - _Requerimientos: R2.1, R2.2, R2.4, R2.5, R2.6_
-  - [ ] 3.3 Agregar respaldo con `overpass.puntos_cercanos` (`estacion_transporte`) y marcar `fuente`
+  - [x] 3.3 Agregar respaldo con `overpass.puntos_cercanos` (`estacion_transporte`) y marcar `fuente`
     - _Requerimientos: R2.3_
-  - [ ] 3.4 Pruebas `test_transporte.py` (radio, duplicados, lista vacía frente a `null`)
+  - [x] 3.4 Pruebas `test_transporte.py` (radio, duplicados, lista vacía frente a `null`)
     - _Requerimientos: R8.1, R8.2_
 - [ ] 4. Riesgo
   - [ ] 4.1 Buscar las capas del Atlas de Riesgos (sísmico e inundación), fijar nombres y recursos, anotarlos en `FUENTES.md`. **Si no hay capa utilizable, parar y avisar al humano para descarga manual** (R3.4)
@@ -34,23 +34,23 @@ Prerrequisito: spec 01 terminada (esquemas, `pipeline/colonias.py`, `data/proces
     - _Requerimientos: R3.2, R3.3, R3.5_
   - [ ] 4.3 Pruebas `test_riesgo.py` con polígonos de juguete
     - _Requerimientos: R8.1_
-- [ ] 5. Gentrificación
-  - [ ] 5.1 Descargar el CSV de Inside Airbnb con `inside_airbnb.descargar_listings` y registrar en `FUENTES.md` la fecha de descarga (corte 2026-09-23)
+- [x] 5. Gentrificación
+  - [x] 5.1 Descargar el CSV de Inside Airbnb con `inside_airbnb.descargar_listings` y registrar en `FUENTES.md` la fecha de descarga (corte 2026-09-23)
     - _Requerimientos: R5.2, R6.6_
-  - [ ] 5.2 (Humano) Descargar de INEGI los resultados por AGEB urbana del Censo 2010 y 2020 y el marco geoestadístico de AGEB a `data/raw/`; anotar URL, fecha y licencia en `FUENTES.md`. Confirmar los nombres de las variables comparables (población total y población de 18+ con educación posbásica o superior)
+  - [x] 5.2 (Humano; hecho por Kiro en un intento por archivo: censos 2010 y 2020 de INEGI y geometría AGEB 2020 de Datos Abiertos CDMX como marco) Descargar de INEGI los resultados por AGEB urbana del Censo 2010 y 2020 y el marco geoestadístico de AGEB a `data/raw/`; anotar URL, fecha y licencia en `FUENTES.md`. Confirmar los nombres de las variables comparables (población total y población de 18+ con educación posbásica o superior)
     - _Requerimientos: R5.1, R5.3, R6.6_
-  - [ ] 5.3 Crear `enriquecer/gentrificacion.py`: densidad Airbnb, agregación de AGEB a colonia por centroide, tres componentes, constante `PESOS` y fórmula con reescalado por componentes faltantes
+  - [x] 5.3 Crear `enriquecer/gentrificacion.py`: densidad Airbnb, agregación de AGEB a colonia por centroide, tres componentes, constante `PESOS` y fórmula con reescalado por componentes faltantes
     - _Requerimientos: R5.1, R5.3, R5.4, R5.5, R5.7, R5.9_
-  - [ ] 5.4 Guardar `explicacion`, `fuente` y `fecha_dato`; calcular la comparación con `hipotesis_presion`
+  - [x] 5.4 Guardar `explicacion`, `fuente` y `fecha_dato`; calcular la comparación con `hipotesis_presion`
     - _Requerimientos: R5.6, R5.8_
-  - [ ] 5.5 Pruebas `test_gentrificacion.py` (tres componentes, uno faltante, todos faltantes, signo del cambio de población)
+  - [x] 5.5 Pruebas `test_gentrificacion.py` (tres componentes, uno faltante, todos faltantes, signo del cambio de población)
     - _Requerimientos: R8.1_
-- [ ] 6. Comunidad
-  - [ ] 6.1 (Humano) Sacar el token gratuito de INEGI DENUE y definirlo en la variable de entorno `INEGI_TOKEN` (nunca en el repo)
+- [x] 6. Comunidad
+  - [x] 6.1 (Humano) Sacar el token gratuito de INEGI DENUE y definirlo en la variable de entorno `INEGI_TOKEN` (nunca en el repo)
     - _Requerimientos: R4.2, R6.5_
-  - [ ] 6.2 Crear `enriquecer/comunidad.py`: puntos OSM a 800 m (máx. 15 por categoría) y resumen DENUE a 500 m por tipo; sin token, continuar solo con OSM
+  - [x] 6.2 Crear `enriquecer/comunidad.py`: puntos OSM a 800 m (máx. 15 por categoría) y resumen DENUE a 500 m por tipo; sin token, continuar solo con OSM
     - _Requerimientos: R4.1, R4.2, R4.3, R4.4, R4.5_
-  - [ ] 6.3 Pruebas `test_comunidad.py` con respuestas simuladas (con y sin `INEGI_TOKEN`)
+  - [x] 6.3 Pruebas `test_comunidad.py` con respuestas simuladas (con y sin `INEGI_TOKEN`)
     - _Requerimientos: R8.1, R8.2_
 - [ ] 7. Integración y reporte
   - [ ] 7.1 Crear `enriquecer/__init__.py` con `enriquecer_todo`: un enriquecedor por campo, fallos aislados, escritura atómica de `colonias.json` con copia `.bak`
