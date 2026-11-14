@@ -1,0 +1,41 @@
+[
+  {
+    "operacion_deseada": "renta",
+    "presupuesto_max_mxn": 18000,
+    "ingreso_mensual_mxn": 45000,
+    "destino_trabajo": {"lat": 19.4330, "lng": -99.1910, "direccion": "Polanco (ubicación aproximada fija para la demo)"},
+    "modo_transporte": "transporte_publico",
+    "tiempo_max_traslado_min": 40,
+    "recamaras_min": 0,
+    "mascotas": false,
+    "tiene_aval": false,
+    "enganche_disponible_mxn": null,
+    "prioridades": ["precio", "traslado"]
+  },
+  {
+    "operacion_deseada": "compra",
+    "presupuesto_max_mxn": 3200000,
+    "ingreso_mensual_mxn": 70000,
+    "destino_trabajo": {"lat": 19.3590, "lng": -99.2600, "direccion": "Santa Fe (ubicación aproximada fija para la demo)"},
+    "modo_transporte": "auto",
+    "tiempo_max_traslado_min": 60,
+    "recamaras_min": 2,
+    "mascotas": true,
+    "tiene_aval": false,
+    "enganche_disponible_mxn": 640000,
+    "prioridades": ["seguridad", "comunidad", "espacio"]
+  },
+  {
+    "operacion_deseada": "renta",
+    "presupuesto_max_mxn": 22000,
+    "ingreso_mensual_mxn": 60000,
+    "destino_trabajo": {"lat": 19.4270, "lng": -99.1677, "direccion": "Paseo de la Reforma (ubicación aproximada fija para la demo)"},
+    "modo_transporte": "mixto",
+    "tiempo_max_traslado_min": 35,
+    "recamaras_min": 0,
+    "mascotas": false,
+    "tiene_aval": false,
+    "enganche_disponible_mxn": null,
+    "prioridades": ["comunidad", "traslado", "precio"]
+  }
+]
