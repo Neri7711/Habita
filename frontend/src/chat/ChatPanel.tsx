@@ -88,7 +88,6 @@ export function ChatPanel({ perfil, onEditar }: ChatPanelProps) {
         className={s.mensajes}
         role="log"
         aria-label="Conversación con Habita"
-        aria-live="polite"
         aria-busy={vista.tipo === "cargando"}
         tabIndex={0}
       >

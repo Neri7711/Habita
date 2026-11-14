@@ -39,13 +39,6 @@
   height: 100%;
 }
 
-/* Sin desplazamiento en hover con movimiento reducido (el borde sí cambia). */
-@media (prefers-reduced-motion: reduce) {
-  .grid .card:hover {
-    transform: none;
-  }
-}
-
 .marca {
   display: flex;
   align-items: flex-start;

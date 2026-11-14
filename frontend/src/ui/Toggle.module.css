@@ -16,4 +16,5 @@
   color: var(--ink-muted);
   transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out);
 }
+.opcion:not(.activa):hover { color: var(--ink); }
 .activa { background: var(--ink); color: var(--on-ink); }

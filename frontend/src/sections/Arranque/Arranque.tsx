@@ -117,19 +117,22 @@ export function Arranque() {
               />
             </div>
 
-            <fieldset
-              data-campo="mascotas"
-              className={s.campo}
-              aria-describedby={errores.mascotas ? mascotasErrorId : undefined}
-            >
-              <legend className={s.etiqueta}>¿Tienes mascotas?</legend>
-              <Toggle etiqueta="¿Tienes mascotas?" opciones={OPCIONES_MASCOTAS} valor={mascotas} onChange={setMascotas} />
+            {/* Mismo patrón que "¿Rentar o comprar?": el radiogroup lleva el nombre y el error (sin legend que lo repita). */}
+            <div data-campo="mascotas" className={s.campo}>
+              <span className={s.etiqueta} aria-hidden="true">¿Tienes mascotas?</span>
+              <Toggle
+                etiqueta="¿Tienes mascotas?"
+                opciones={OPCIONES_MASCOTAS}
+                valor={mascotas}
+                onChange={setMascotas}
+                aria-describedby={errores.mascotas ? mascotasErrorId : undefined}
+              />
               {errores.mascotas && (
                 <p id={mascotasErrorId} className={s.error} role="alert">
                   {errores.mascotas}
                 </p>
               )}
-            </fieldset>
+            </div>
 
             <Button type="submit" variante="primario" flecha className={s.enviar}>
               Buscar opciones

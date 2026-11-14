@@ -1,5 +1,5 @@
-import { Greca, type VarianteGreca } from "../../illustrations";
 import { Link } from "react-router-dom";
+import { Greca, type VarianteGreca } from "../../illustrations";
 import { RUTAS } from "../../rutas";
 import { Card, Pill, Reveal } from "../../ui";
 import s from "./Pilares.module.css";
@@ -28,7 +28,7 @@ export function Pilares({ resumen = false }: { resumen?: boolean }) {
             </div>
             {/* En la página completa el ejemplo va justo debajo: no hace falta enlace. */}
             {resumen && (
-              <Link to={RUTAS.comoFunciona} className={s.link}>
+              <Link to={`${RUTAS.comoFunciona}#que-explicamos`} className={s.link}>
                 Ver los 5 <span aria-hidden="true">→</span>
               </Link>
             )}

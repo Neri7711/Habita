@@ -16,7 +16,7 @@ export function ListaColonias({ estado }: { estado: EstadoColonias }) {
     <section aria-label="Colonias por alcaldía" className="banda-paper">
       <div className="contenedor seccion">
         {estado === "cargando" && (
-          <p className={`${s.nota} t-small`} aria-busy="true">
+          <p className={`${s.nota} t-small`} role="status">
             Cargando colonias…
           </p>
         )}
@@ -28,7 +28,7 @@ export function ListaColonias({ estado }: { estado: EstadoColonias }) {
         {Array.isArray(estado) && (
           <div className={s.grupos}>
             {origen === "mock" && (
-              <p className={s.aviso}>
+              <p>
                 <Chip variante="neutro">Datos de ejemplo</Chip>
               </p>
             )}
@@ -43,7 +43,6 @@ export function ListaColonias({ estado }: { estado: EstadoColonias }) {
                       <li key={c.colonia}>
                         <Card interactiva={false} className={s.card}>
                           <h3 className="t-h3">{c.colonia}</h3>
-                          <p className={`${s.nota} t-small`}>{c.alcaldia}</p>
                           <dl className={s.dato}>
                             <dt className="t-small">Presión de gentrificación</dt>
                             <dd>

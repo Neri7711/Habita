@@ -12,10 +12,12 @@ export function Accordion({ items }: { items: readonly Item[] }) {
       {items.map((it) => {
         const open = abierto === it.id;
         const panelId = `${base}-${it.id}`;
+        const botonId = `${panelId}-boton`;
         return (
           <li key={it.id} className={`${s.item} ${open ? s.abierto : ""}`}>
             <h3 className={s.titulo}>
               <button
+                id={botonId}
                 type="button"
                 className={s.boton}
                 aria-expanded={open}
@@ -26,7 +28,7 @@ export function Accordion({ items }: { items: readonly Item[] }) {
                 <span className={s.icono} aria-hidden="true">+</span>
               </button>
             </h3>
-            <div id={panelId} role="region" hidden={!open} className={s.panel}>
+            <div id={panelId} role="region" aria-labelledby={botonId} hidden={!open} className={s.panel}>
               {it.contenido}
             </div>
           </li>
