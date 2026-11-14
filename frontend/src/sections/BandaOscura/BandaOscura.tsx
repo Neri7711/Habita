@@ -18,7 +18,7 @@ export function BandaOscura() {
           <h2 id="banda-titulo" className={`${s.titulo} t-h2`}>
             ¿Listo para encontrar tu <span className={s.acento}>lugar</span>?
           </h2>
-          <Button variante="primario" to={RUTAS.buscar} flecha>
+          <Button variante="secundario" sobre="ink" to={RUTAS.buscar} flecha>
             Hablar con Habita
           </Button>
         </div>

@@ -36,7 +36,7 @@ export function EjemploRecomendacion() {
           <h2 id="ejemplo-titulo" className="t-h2">
             Así te recomienda Habita
           </h2>
-          {client.origen === "mock" && <p className={`${s.aviso} t-small`}>Datos de ejemplo</p>}
+          {client.origen === "mock" && <Chip variante="neutro">Datos de ejemplo</Chip>}
         </header>
       </Reveal>
 

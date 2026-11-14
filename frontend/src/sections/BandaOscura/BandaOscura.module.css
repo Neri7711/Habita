@@ -36,6 +36,8 @@
 .acento { color: var(--tezontle-bright); }
 
 .bloque > a { position: relative; }
+/* Sobre ink el anillo tezontle no llega a 3:1; tezontle-bright sí (≈5:1). */
+.bloque :focus-visible { outline-color: var(--tezontle-bright); }
 
 @media (max-width: 767px) {
   .bloque { padding: var(--sp-7) var(--sp-5); }

@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import heroIslas from "../../assets/ilustraciones/hero-islas-cdmx.svg";
 import xolo from "../../assets/ilustraciones/xolo-recostado.svg";
 import { useClient } from "../../client/useClient";
+import { useProgresoScroll } from "../../hooks/useProgresoScroll";
 import { RUTAS } from "../../rutas";
 import { Button, Card } from "../../ui";
 import s from "./Hero.module.css";
@@ -33,26 +34,29 @@ function useConteoColonias(): number | null {
 
 export function Hero() {
   const n = useConteoColonias();
+  const fondoRef = useRef<HTMLDivElement>(null);
+  useProgresoScroll(fondoRef);
 
   return (
-    <section className={`contenedor ${s.raiz}`} aria-labelledby="hero-titulo">
-      <div className={s.caja}>
+    <section className={s.raiz} aria-labelledby="hero-titulo">
+      {/* Cielo a sangre detrás del navbar; al hacer scroll se recorta hasta la caja redondeada del contenedor. */}
+      <div ref={fondoRef} className={s.fondo} aria-hidden="true" />
+
+      <div className={`contenedor ${s.contenido}`}>
         <div className={s.texto}>
           <h1 id="hero-titulo" className={`t-hero ${s.titular}`}>
             <span className="resaltada">Encuentra</span> tu lugar en la CDMX sin adivinar
           </h1>
-          <div className={s.lado}>
-            <p className="t-body-lg">
-              Te decimos cuánto cuesta vivir de verdad, si el precio es justo y si el anuncio es confiable.
-            </p>
-            <div className={s.acciones}>
-              <Button variante="primario" to={RUTAS.buscar} flecha>
-                Empezar mi búsqueda
-              </Button>
-              <Link to={RUTAS.comoFunciona} className={s.secundario}>
-                Ver cómo funciona
-              </Link>
-            </div>
+          <p className={`t-body-lg ${s.bajada}`}>
+            Te decimos cuánto cuesta vivir de verdad, si el precio es justo y si el anuncio es confiable.
+          </p>
+          <div className={s.acciones}>
+            <Button variante="primario" to={RUTAS.buscar} flecha>
+              Empezar mi búsqueda
+            </Button>
+            <Link to={RUTAS.comoFunciona} className={s.secundario}>
+              Ver cómo funciona
+            </Link>
           </div>
         </div>
 

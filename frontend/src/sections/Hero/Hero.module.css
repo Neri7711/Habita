@@ -1,14 +1,31 @@
+/* Sube detrás del navbar transparente (su alto se compensa con padding) para que la primera pantalla sea cielo. */
 .raiz {
-  padding-top: var(--sp-2);
-  padding-bottom: calc(var(--seccion) / 2);
+  position: relative;
+  isolation: isolate;
+  margin-top: calc(var(--navbar-alto) * -1);
+  margin-bottom: calc(var(--seccion) / 2);
+  padding-top: calc(var(--navbar-alto) + var(--sp-2));
 }
 
-/* Bloque de cielo liso: texto arriba, islas a todo el ancho ancladas abajo. El SVG tiene el mismo fondo (--cielo). */
-.caja {
-  position: relative;
-  border-radius: var(--r-lg);
+/* Cielo liso. --progreso (0→1, lo escribe useProgresoScroll) lo recorta de sangre completa a la caja
+   redondeada del contenedor. Solo clip-path: sin layout por frame y el contenido no se mueve. */
+.fondo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background-color: var(--cielo);
-  overflow: hidden;
+  --p: var(--progreso, 0);
+  --lado: max(var(--pad-x), (100% - var(--contenedor)) / 2);
+  clip-path: inset(
+    calc(var(--p) * (var(--navbar-alto) + var(--sp-2))) calc(var(--p) * var(--lado)) 0
+      round calc(var(--p) * var(--r-lg))
+  );
+}
+
+/* Solo padding-block aquí: el inline lo pone .contenedor. */
+.contenido {
+  display: grid;
+  color: var(--ink);
 }
 
 /* Texto */
@@ -16,14 +33,12 @@
   display: grid;
   gap: var(--sp-5);
   padding: var(--sp-6) var(--sp-5) var(--sp-5);
-  color: var(--ink);
 }
-.titular { max-width: 12ch; }
-.lado {
-  display: grid;
-  gap: var(--sp-5);
-  max-width: 38ch;
+.titular {
+  max-width: 12ch;
+  text-wrap: balance;
 }
+.bajada { max-width: 38ch; }
 
 .acciones {
   display: flex;
@@ -34,6 +49,7 @@
 .secundario {
   font: 600 15px/1 var(--font-texto);
   color: var(--ink);
+  white-space: nowrap;
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: 6px;
@@ -65,7 +81,7 @@
   border: 1px solid var(--line);
 }
 
-/* Card flotante: en móvil va debajo de las islas; desde 768 flota abajo a la derecha, sobre cielo libre. */
+/* Card flotante: en móvil va debajo de las islas; desde 768 flota abajo a la derecha. */
 .tarjeta {
   display: flex;
   align-items: center;
@@ -123,35 +139,35 @@
   }
 }
 
-/* Escritorio: titular a la izquierda, bajada y CTAs a la derecha alineados abajo (composición CraftHouse). */
+/* Escritorio: texto a la izquierda, islas a la derecha centradas en vertical; la card monta su esquina. */
 @media (min-width: 1024px) {
-  .texto {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
-    align-items: end;
-    gap: var(--sp-7);
-    padding-top: var(--sp-7);
+  .contenido {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: center;
+    column-gap: var(--sp-6);
+    padding-block: var(--sp-7);
   }
-  .titular { max-width: 16ch; }
-  /* Para que el hero quepa en una pantalla de laptop (1440×900): las islas no pasan de 1000px
-     y suben bajo el texto sobre el cielo vacío de su parte superior. */
-  .texto { position: relative; z-index: 1; }
-  /* Bajada y CTAs arriba, para dejar libre la zona donde suben las islas y sus etiquetas. */
-  .lado { align-self: start; padding-top: var(--sp-4); }
+  .texto { padding: 0 0 0 var(--sp-7); }
+  .arte { margin-right: var(--sp-5); }
+  /* 72px no cabe en la columna: "lugar en la CDMX" debe ir en una línea. */
+  .titular {
+    max-width: none;
+    font-size: clamp(48px, 2.6vw + 20px, 58px);
+  }
   .acciones { flex-wrap: nowrap; column-gap: var(--sp-4); }
-  .secundario { white-space: nowrap; }
-  .islas {
-    max-width: 1000px;
-    margin: -72px auto 0;
+  .tarjeta {
+    right: 0;
+    bottom: calc(var(--sp-4) * -1);
   }
 }
 
-/* La imagen trae grano de papel y el cielo de la caja es liso: se desvanecen sus bordes
-   para que no se vea el corte. Las islas quedan lejos de las orillas, no se pierde nada. */
+/* La imagen trae grano de papel y el cielo es liso: se desvanecen sus bordes para que no se vea el corte.
+   Las islas quedan lejos de las orillas, no se pierde nada. */
 .imagen {
   -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
-    linear-gradient(to bottom, transparent, #000 14%);
+    linear-gradient(to bottom, transparent, #000 14%, #000 92%, transparent);
   -webkit-mask-composite: source-in;
   mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
-    linear-gradient(to bottom, transparent, #000 14%);
+    linear-gradient(to bottom, transparent, #000 14%, #000 92%, transparent);
   mask-composite: intersect;
 }
