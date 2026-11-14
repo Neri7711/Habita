@@ -18,6 +18,9 @@ Prioridad #1: **velocidad de hackatón**. Nada de infraestructura que no se pued
 - El código del proyecto nunca llama a un LLM directamente.
 
 ## Servicios externos (solo gratuitos, sin API key de pago)
+- **Ya hay clientes en `src/arraigo/fuentes/`** (Datos Abiertos CDMX, Nominatim, Overpass, Inside Airbnb, DENUE, Banxico).
+  Úsalos en vez de escribir llamadas HTTP nuevas; la lista y su estado están en `data/raw/FUENTES.md`.
+- Tokens gratuitos en variables de entorno (`INEGI_TOKEN`, `BANXICO_TOKEN`); nunca en el código ni en git.
 - Geocodificación: Nominatim (OSM), máx. 1 req/s, con caché en disco.
 - Traslado: estimación determinista (distancia haversine × factor de rodeo ÷ velocidad por modo). Documentar supuestos.
 - Datos oficiales: descargar archivos a mano a `data/raw/` y registrar URL + fecha en `data/raw/FUENTES.md`.

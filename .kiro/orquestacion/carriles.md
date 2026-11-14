@@ -13,7 +13,7 @@ Regla de oro: **cada carril solo toca SUS archivos**. Nadie toca el front. Nadie
 | F | Carga + reporte de calidad | `src/arraigo/pipeline/cargar.py`, `reporte.py`, `scripts/cargar_dataset.py`, `tests/test_cargar_dataset.py` | **A, B y C terminados** (segunda ronda) |
 
 Humanos en paralelo (no Kiro):
-- **H1**: descargar el catálogo de colonias de Datos Abiertos CDMX → `data/raw/colonias_cdmx.geojson` y llenar `data/raw/FUENTES.md`.
+- **H1**: ~~descargar a mano el catálogo de colonias~~ → ahora lo hace el carril B con `arraigo.fuentes.datos_cdmx` (dataset `colonias-del-iecm-2022`). Humano solo: sacar tokens gratuitos de INEGI DENUE y Banxico SIE para la spec 02/03.
 - **H2**: capturar a mano 3-5 anuncios reales por colonia (renta y venta) → `data/raw/anuncios_reales.csv`.
 
 ---
@@ -36,7 +36,8 @@ Ejecuta las tareas 1.3 (colonia.py + su prueba) y 2.2-2.3 (pipeline/colonias.py)
 Solo puedes crear/editar: src/arraigo/schemas/colonia.py, src/arraigo/pipeline/colonias.py,
 tests/test_schema_colonia.py, tests/test_colonias.py. Para dependencias usa solo `uv add shapely`.
 NO edites src/arraigo/schemas/__init__.py (es del carril A).
-Si data/raw/colonias_cdmx.geojson no existe todavía, haz que la prueba de match se marque como skip con mensaje claro.
+Para obtener data/raw/colonias_cdmx.geojson usa arraigo.fuentes.datos_cdmx.buscar_datasets("colonias-del-iecm-2022")
+y arraigo.fuentes._http.descargar sobre el recurso GeoJSON (si solo hay SHP/ZIP, avísame). Anota fecha en data/raw/FUENTES.md.
 No hagas commit. Termina con uv run pytest tests/test_schema_colonia.py tests/test_colonias.py y marca las tareas.
 ```
 
@@ -58,7 +59,8 @@ Crea .kiro/specs/02-enriquecimiento-colonias/ con requirements.md, design.md y t
 indice_delitos (carpetas de investigación FGJ, Datos Abiertos CDMX), estaciones_transporte_cercanas (GTFS SEMOVI y Ecobici),
 nivel_riesgo (Atlas de Riesgos CDMX), puntos_comunidad (OpenStreetMap/Overpass y DENUE INEGI)
 e indicador_presion_gentrificacion (densidad Inside Airbnb + cambio Censo INEGI 2010-2020 por AGEB, fórmula documentada).
-Cada dato con fuente y fecha_dato. Descargas manuales a data/raw/, nada de scraping. Solo documentos, no escribas código.
+Cada dato con fuente y fecha_dato. Nada de scraping. Diseña sobre los clientes ya existentes en src/arraigo/fuentes/
+(lee data/raw/FUENTES.md). Solo documentos, no escribas código.
 ```
 
 ## Prompt carril E
