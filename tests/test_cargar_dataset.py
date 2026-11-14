@@ -27,3 +27,12 @@ def test_carga_completa(tmp_path):
     assert all(i.lat is not None for i in validos)  # los sin coordenadas tomaron el centroide
     for f in ("inmuebles.json", "colonias.json", "rechazados.jsonl", "reporte_calidad.md"):
         assert (tmp_path / "out" / f).exists()
+
+
+def test_medianas_provisionales_sin_reales(tmp_path):
+    cat = cargar_catalogo()
+    escribir_csv(generar(cat, seed=42), tmp_path / "anuncios_sinteticos.csv")
+    validos, _ = validar_anuncios(tmp_path, cat)
+    for c in construir_colonias(cat, validos):
+        for d in (c.precio_m2_renta_mediana, c.precio_m2_venta_mediana):
+            assert d.valor and d.valor > 0 and "PROVISIONAL" in d.fuente

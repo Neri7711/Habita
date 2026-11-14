@@ -6,7 +6,7 @@
 | Validación | Pydantic v2 | Mismo modelo sirve luego como schema de herramientas MCP |
 | Almacenamiento | Archivos JSON en `data/processed/` | Cero infraestructura |
 | Origen de anuncios | **Mixto**: ~40 anuncios reales capturados a mano (3 por colonia) + generador sintético calibrado con ellos | No hay scraping ni tiempo para capturar 200+ a mano |
-| Precio m2 por colonia | Mediana de los anuncios **reales** de esa colonia | No existe fuente abierta por colonia; se declara así en `fuente` |
+| Precio m2 por colonia | Mediana de los anuncios **reales** de esa colonia; si no hay, de los sintéticos con `fuente` marcada PROVISIONAL | No existe fuente abierta por colonia y no hubo tiempo de capturar reales; se declara así en `fuente` |
 | Centroides | Manuales: columnas `lat`,`lng` en `colonias_piloto.csv` | Son 13 colonias; GeoJSON + shapely no vale el tiempo. Se cita como aproximado |
 
 ## Modelos (`src/arraigo/schemas/`)

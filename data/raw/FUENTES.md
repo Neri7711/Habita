@@ -7,7 +7,7 @@
 |---|---|---|---|---|
 | colonias_piloto.csv | Selección del equipo | — | 2026-11-14 | — |
 | colonias_piloto.csv (`lat`,`lng`) | Centroides manuales aproximados del equipo (~300 m); el GeoJSON del IECM se descartó por tiempo | — | 2026-11-14 | — |
-| anuncios_sinteticos.csv | Generado por `scripts/generar_anuncios_sinteticos.py --seed 42` (medianas PROVISIONALES hasta tener reales) | — | 2026-11-14 | — |
+| anuncios_sinteticos.csv | Generado por `scripts/generar_anuncios_sinteticos.py --seed 42` (medianas PROVISIONALES hasta tener reales). **Las medianas de precio/m2 de `colonias.json` salen de estos sintéticos: no son dato de mercado y así se dice en el demo** | — | 2026-11-14 | — |
 | tarifas_semovi.json | Tarifas oficiales de transporte público (Metro, Metrobús, etc.); cada tarifa trae su URL y fecha | ver campo `fuente` por tarifa | 2026-11-14 | — |
 | calculos_supuestos.json | **Supuestos del equipo** (días laborales, costo/km de auto, servicios, plazo y sobretasa hipotecaria de +3.5 pp sobre TIIE); cada uno trae su texto en `fuente` | — | 2026-11-14 | — |
 | tasa_referencia.json | Banco de México, SIE, serie SF43783 (TIIE 28 días), guardada por `scripts/calcular_costos.py` con respaldo si falla la API | API SIE | 2026-11-17 (dato) | — |
