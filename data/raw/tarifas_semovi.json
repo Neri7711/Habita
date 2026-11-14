@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "nota": "Tarifas por viaje en MXN. Metro, Metrobús, Tren Ligero, Cablebús y RTP confirmadas en notas de prensa de junio 2026 que citan a las autoridades de la CDMX; el Trolebús solo figura como 'sin cambios' y su monto ($4) está por confirmar en la Gaceta Oficial. Ecobici anual: plan anual sin Ecobici+.",
+  "tarifas": {
+    "metro": {
+      "mxn": 5,
+      "tipo_cobro": "viaje",
+      "url": "https://mexicocity.cdmx.gob.mx/e/getting-around/mexico-city-metro-faq/",
+      "fecha_vigencia": "2026-06-13"
+    },
+    "metrobus": {
+      "mxn": 6,
+      "tipo_cobro": "viaje",
+      "url": "https://www.terra.com.mx/nacionales/2026/6/13/sube-precio-del-transporte-publico-en-cdmx-estas-son-las-tarifas-oficiales-durante-el-mundial-2026-72472.html",
+      "fecha_vigencia": "2026-06-13"
+    },
+    "trolebus": {
+      "mxn": 4,
+      "tipo_cobro": "viaje",
+      "url": "https://www.semovi.cdmx.gob.mx/comunicacion/nota/bol-el-ajuste-la-tarifa-del-transporte-busca-fortalecer-la-calidad-en-el-servicio",
+      "fecha_vigencia": "2026-06-13"
+    },
+    "tren_ligero": {
+      "mxn": 3,
+      "tipo_cobro": "viaje",
+      "url": "https://www.terra.com.mx/nacionales/2026/6/13/sube-precio-del-transporte-publico-en-cdmx-estas-son-las-tarifas-oficiales-durante-el-mundial-2026-72472.html",
+      "fecha_vigencia": "2026-06-13"
+    },
+    "rtp": {
+      "mxn": 2,
+      "tipo_cobro": "viaje",
+      "url": "https://www.terra.com.mx/nacionales/2026/6/13/sube-precio-del-transporte-publico-en-cdmx-estas-son-las-tarifas-oficiales-durante-el-mundial-2026-72472.html",
+      "fecha_vigencia": "2026-06-13"
+    },
+    "cablebus": {
+      "mxn": 7,
+      "tipo_cobro": "viaje",
+      "url": "https://www.terra.com.mx/nacionales/2026/6/13/sube-precio-del-transporte-publico-en-cdmx-estas-son-las-tarifas-oficiales-durante-el-mundial-2026-72472.html",
+      "fecha_vigencia": "2026-06-13"
+    },
+    "ecobici_anual": {
+      "mxn": 588,
+      "tipo_cobro": "anual",
+      "url": "https://politica.expansion.mx/cdmx/2026/08/28/ecobici-estas-tarifas-vigentes-en-2026",
+      "fecha_vigencia": "2026-08-28"
+    }
+  }
+}
