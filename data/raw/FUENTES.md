@@ -7,7 +7,7 @@
 |---|---|---|---|---|
 | colonias_piloto.csv | Selección del equipo | — | 2026-11-14 | — |
 | colonias_piloto.csv (`lat`,`lng`) | Centroides manuales aproximados del equipo (~300 m); el GeoJSON del IECM se descartó por tiempo | — | 2026-11-14 | — |
-| anuncios_sinteticos.csv | Generado por `scripts/generar_anuncios_sinteticos.py --seed 42` (medianas PROVISIONALES hasta tener reales) | — | 2026-11-14 | — |
+| anuncios_sinteticos.csv | Generado por `scripts/generar_anuncios_sinteticos.py --seed 42` (medianas PROVISIONALES hasta tener reales). **Las medianas de precio/m2 de `colonias.json` salen de estos sintéticos: no son dato de mercado y así se dice en el demo** | — | 2026-11-14 | — |
 
 ## APIs conectadas (`src/arraigo/fuentes/`)
 

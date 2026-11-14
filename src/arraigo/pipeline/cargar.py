@@ -50,18 +50,24 @@ def validar_anuncios(raw_dir: Path, catalogo: dict[str, dict]) -> tuple[list[Inm
 
 
 def construir_colonias(catalogo: dict[str, dict], validos: list[Inmueble]) -> list[Colonia]:
-    """Centroide + mediana de precio/m2 por operación, solo con anuncios reales (captura_manual)."""
+    """Centroide + mediana de precio/m2 por operación.
+
+    Usa los anuncios reales (captura_manual) si hay; si no, los sintéticos, marcados PROVISIONAL en `fuente`.
+    shortcut: medianas de sintéticos (calibrados con una tabla estimada); cambiar en cuanto haya anuncios reales.
+    """
     colonias = []
     for c in catalogo.values():
         medianas = {}
         for op in ("renta", "venta"):
-            reales = [i for i in validos if i.colonia == c["colonia"] and i.operacion.value == op
-                      and i.fuente.startswith("captura_manual") and i.m2]
-            if reales:
+            grupo = [i for i in validos if i.colonia == c["colonia"] and i.operacion.value == op and i.m2]
+            reales = [i for i in grupo if i.fuente.startswith("captura_manual")]
+            base, origen = (reales, "anuncios capturados a mano") if reales else (
+                grupo, "anuncios sintéticos (PROVISIONAL, no es dato de mercado)")
+            if base:
                 medianas[op] = Dato[float](
-                    valor=round(statistics.median(i.precio_mxn / i.m2 for i in reales), 1),
-                    fuente=f"mediana de {len(reales)} anuncios capturados a mano",
-                    fecha_dato=max(i.fecha_captura for i in reales),
+                    valor=round(statistics.median(i.precio_mxn / i.m2 for i in base), 1),
+                    fuente=f"mediana de {len(base)} {origen}",
+                    fecha_dato=max(i.fecha_captura for i in base),
                 )
             else:
                 medianas[op] = Dato[float]()
