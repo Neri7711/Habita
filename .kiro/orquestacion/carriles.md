@@ -4,6 +4,38 @@
 > La versión local de Kiro de A-C quedó respaldada en la rama local `respaldo/kiro-carriles-abc` (no se usa).
 > ⚠️ Para no duplicar trabajo otra vez: **cada carril tiene UN dueño** (columna "Quién"). Si no es tuyo, no lo corras.
 
+## Ronda 3 (en paralelo con G, que sigue corriendo)
+
+| Carril | Quién | Qué hace | Archivos que le pertenecen |
+|---|---|---|---|
+| K | Kiro en laptop de Neri | Implementar spec 03 (costo real + precio justo) | `src/arraigo/calculos/`, `src/arraigo/pipeline/referencias.py`, `scripts/calcular_costos.py`, `data/raw/tarifas_semovi.json`, `data/raw/calculos_supuestos.json`, `data/raw/tasa_referencia.json`, `tests/test_calculos_*.py`, `tests/test_referencias.py` |
+| L | Kiro en laptop de Neri | Implementar spec 05 (agente MCP) — bloques que no dependen de la 03 | `src/arraigo/agente/`, `.kiro/settings/mcp.json`, `data/raw/demo_perfiles.json`, `scripts/capturar_demo.py`, `tests/test_agente_*.py`, `tests/test_mcp_server.py`, `tests/test_demo_perfiles.py`, `pyproject.toml`/`uv.lock` (solo `uv add mcp`) |
+
+Nadie de K ni L toca `src/arraigo/pipeline/enriquecer/`, `src/arraigo/schemas/colonia.py` ni `data/raw/FUENTES.md` (son de G).
+
+### Prompt carril K
+```
+Lee #steering y .kiro/specs/03-costo-real-precio-justo (requirements, design, tasks). Ejecuta TODAS sus tareas en orden.
+Usa los clientes ya probados de src/arraigo/fuentes/ (nominatim, banxico; token en BANXICO_TOKEN) y los esquemas de src/arraigo/schemas/.
+Solo puedes crear/editar: src/arraigo/calculos/, src/arraigo/pipeline/referencias.py, scripts/calcular_costos.py,
+data/raw/tarifas_semovi.json, data/raw/calculos_supuestos.json, data/raw/tasa_referencia.json, tests/test_calculos_*.py, tests/test_referencias.py.
+NO edites data/raw/FUENTES.md, src/arraigo/schemas/ ni src/arraigo/pipeline/enriquecer/ (otro carril está trabajando ahí):
+si necesitas registrar una fuente, ponla al final de tu resumen y yo la agrego.
+Las funciones públicas deben llamarse arraigo.calculos.costo_real(inmueble, perfil, colonia) y arraigo.calculos.precio_justo(inmueble, colonia)
+(es el contrato que usa la spec 05). No hagas commit. Termina con uv run python scripts/calcular_costos.py y uv run pytest; marca tasks.md.
+```
+
+### Prompt carril L
+```
+Lee #steering y .kiro/specs/05-agente-mcp (requirements, design, tasks). Ejecuta los bloques 1 (Preparación), 2 (Núcleo del agente),
+4 (Servidor MCP) y 5 (Registro y guía para Kiro). Del bloque 3 haz las herramientas que usan antifraude (src/arraigo/antifraude/)
+y colonias; las que necesitan arraigo.calculos (costo_real, precio_justo) déjalas detrás de un adaptador que regrese
+{"aviso": "pendiente spec 03"} si arraigo.calculos aún no existe — otro carril lo está escribiendo en paralelo, NO lo implementes tú.
+Instala el SDK con uv add mcp. Solo puedes crear/editar: src/arraigo/agente/, .kiro/settings/mcp.json, data/raw/demo_perfiles.json,
+scripts/capturar_demo.py, tests/test_agente_*.py, tests/test_mcp_server.py, tests/test_demo_perfiles.py, pyproject.toml y uv.lock.
+No toques schemas, calculos, antifraude ni enriquecer. No hagas commit. Termina con uv run pytest y marca en tasks.md lo hecho.
+```
+
 ## Ronda 2
 
 | Carril | Quién | Qué hace | Archivos que le pertenecen |
