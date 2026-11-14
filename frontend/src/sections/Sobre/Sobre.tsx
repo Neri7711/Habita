@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { useClient } from "../../client/useClient";
 import type { StatsLanding } from "../../domain";
 import { XoloScene } from "../../illustrations";
-import { Pill, Reveal, Stat } from "../../ui";
+import { Button, Pill, Reveal, Stat } from "../../ui";
+import { useCarga } from "../Colonias/useCarga";
 import s from "./Sobre.module.css";
 
 const PASO_MS = 60;
@@ -16,16 +15,8 @@ function filasDeStats(stats: StatsLanding | null) {
 }
 
 export function Sobre() {
-  const client = useClient();
-  const [stats, setStats] = useState<StatsLanding | null>(null);
-
-  useEffect(() => {
-    let vigente = true;
-    client.obtenerStats().then((r) => vigente && setStats(r), () => undefined);
-    return () => {
-      vigente = false;
-    };
-  }, [client]);
+  const carga = useCarga((c) => c.obtenerStats());
+  const stats = carga.tipo === "listo" ? carga.datos : null;
 
   const esEjemplo = stats?.origen === "mock";
 
@@ -46,13 +37,21 @@ export function Sobre() {
             </p>
           </Reveal>
           <Reveal retrasoMs={PASO_MS * 3}>
-            <ul className={s.stats} aria-busy={stats === null}>
+            <ul className={s.stats} aria-busy={carga.tipo === "cargando"}>
               {filasDeStats(stats).map((f) => (
                 <li key={f.etiqueta} className={s.stat}>
                   <Stat valor={f.valor} sufijo={f.sufijo} etiqueta={f.etiqueta} />
                 </li>
               ))}
             </ul>
+            {carga.tipo === "error" && (
+              <div className={s.error} role="status">
+                <p className="t-small">{carga.mensaje}</p>
+                <Button variante="secundario" onClick={carga.reintentar}>
+                  Reintentar
+                </Button>
+              </div>
+            )}
             {esEjemplo && (
               <p className={`t-small ${s.nota}`}>Datos de ejemplo: cifras provisionales mientras conectamos los datos reales.</p>
             )}

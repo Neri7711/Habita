@@ -15,24 +15,27 @@ export function ListaColonias({ estado }: { estado: EstadoColonias }) {
   return (
     <section aria-label="Colonias por alcaldía" className="banda-paper">
       <div className="contenedor seccion">
-        {estado === "cargando" && (
+        {estado.tipo === "cargando" && (
           <p className={`${s.nota} t-small`} role="status">
             Cargando colonias…
           </p>
         )}
-        {estado === "error" && (
-          <p className={`${s.nota} t-small`} role="status">
-            No pudimos cargar las colonias. Intenta recargar la página.
-          </p>
+        {estado.tipo === "error" && (
+          <div className={s.error} role="status">
+            <p className={`${s.nota} t-small`}>{estado.mensaje}</p>
+            <Button variante="secundario" onClick={estado.reintentar}>
+              Reintentar
+            </Button>
+          </div>
         )}
-        {Array.isArray(estado) && (
+        {estado.tipo === "listo" && (
           <div className={s.grupos}>
             {origen === "mock" && (
               <p>
                 <Chip variante="neutro">Datos de ejemplo</Chip>
               </p>
             )}
-            {agruparPorAlcaldia(estado).map(({ alcaldia, colonias }, i) => (
+            {agruparPorAlcaldia(estado.datos).map(({ alcaldia, colonias }, i) => (
               <Reveal key={alcaldia} retrasoMs={i * 60}>
                 <section aria-labelledby={`alcaldia-${i}`} className={s.grupo}>
                   <h2 id={`alcaldia-${i}`} className={`t-h2 ${s.alcaldia}`}>

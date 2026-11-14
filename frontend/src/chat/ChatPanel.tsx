@@ -1,17 +1,26 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useClient } from "../client/useClient";
-import type { PerfilRapido, RecomendacionEjemplo } from "../domain";
+import { mensajeDeError } from "../client/ErrorApi";
+import { nombreZona, type OpcionBusqueda, type PerfilRapido } from "../domain";
 import { XoloScene } from "../illustrations";
 import { formatMXN } from "../lib/format";
 import { Button, Card, Chip } from "../ui";
-import { avanzar, etiquetaIntencion, iniciar, type EstadoChat, type Intencion, type Mensaje } from "./scriptedChat";
+import {
+  avanzar,
+  etiquetaIntencion,
+  iniciar,
+  type CierreResultados,
+  type EstadoChat,
+  type Intencion,
+  type Mensaje,
+} from "./scriptedChat";
 import s from "./ChatPanel.module.css";
 
 type ChatPanelProps = { perfil: PerfilRapido; onEditar: () => void };
 
 type Vista =
   | { tipo: "cargando" }
-  | { tipo: "error" }
+  | { tipo: "error"; mensaje: string }
   | { tipo: "listo"; estado: EstadoChat; mensajes: Mensaje[] };
 
 /** Primer mensaje del usuario: resume lo que capturó en el formulario. */
@@ -21,7 +30,7 @@ function resumenPerfil(p: PerfilRapido): Mensaje {
   return {
     id: "perfil",
     autor: "usuario",
-    texto: `Quiero ${operacion} con un presupuesto de hasta ${formatMXN(p.presupuesto_max_mxn)}. Trabajo en ${p.destino_trabajo}, ${mascotas}.`,
+    texto: `Quiero ${operacion} con un presupuesto de hasta ${formatMXN(p.presupuesto_max_mxn)}. Trabajo en ${nombreZona(p.destino_trabajo)}, ${mascotas}.`,
   };
 }
 
@@ -46,7 +55,7 @@ export function ChatPanel({ perfil, onEditar }: ChatPanelProps) {
         const paso = iniciar(perfil, resultado);
         setVista({ tipo: "listo", estado: paso.estado, mensajes: [resumenPerfil(perfil), ...paso.mensajes] });
       },
-      () => vigente && setVista({ tipo: "error" }),
+      (error) => vigente && setVista({ tipo: "error", mensaje: mensajeDeError(error) }),
     );
     return () => {
       vigente = false;
@@ -99,7 +108,7 @@ export function ChatPanel({ perfil, onEditar }: ChatPanelProps) {
 
         {vista.tipo === "error" && (
           <BurbujaAgente>
-            <p>Uy, no pude traer las opciones en este momento. No es tu culpa; inténtalo de nuevo o ajusta tu búsqueda.</p>
+            <p>{vista.mensaje}</p>
             <div className={s.acciones}>
               <button type="button" className={s.sugerencia} onClick={() => setIntento((n) => n + 1)}>
                 Reintentar
@@ -117,7 +126,9 @@ export function ChatPanel({ perfil, onEditar }: ChatPanelProps) {
             ) : (
               <BurbujaAgente key={m.id}>
                 <p>{m.texto}</p>
+                {m.supuestos && m.supuestos.length > 0 && <Supuestos items={m.supuestos} />}
                 {m.tarjeta && <TarjetaOpcion opcion={m.tarjeta} />}
+                {m.cierre && <Cierre cierre={m.cierre} />}
               </BurbujaAgente>
             ),
           )}
@@ -156,7 +167,46 @@ function BurbujaAgente({ children }: { children: ReactNode }) {
   );
 }
 
-function TarjetaOpcion({ opcion }: { opcion: RecomendacionEjemplo }) {
+function Supuestos({ items }: { items: string[] }) {
+  return (
+    <div className={s.supuestos}>
+      <p className={s.supuestosTitulo}>Asumimos que…</p>
+      <ul>
+        {items.map((x) => (
+          <li key={x}>{x}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Cierre({ cierre }: { cierre: CierreResultados }) {
+  const { avisos, fuentes, alternativas } = cierre;
+  return (
+    <div className={s.cierre}>
+      {avisos.length > 0 && (
+        <ul className={s.avisos}>
+          {avisos.map((a) => (
+            <li key={a}>{a}</li>
+          ))}
+        </ul>
+      )}
+      {alternativas && <p>{alternativas}</p>}
+      {fuentes.length > 0 && (
+        <ul className={s.fuentes} aria-label="Fuentes">
+          {fuentes.map((f) => (
+            <li key={f.descripcion}>
+              Fuente: {f.descripcion}
+              {f.fecha_dato ? ` (${f.fecha_dato})` : ""}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function TarjetaOpcion({ opcion }: { opcion: OpcionBusqueda }) {
   const precio = formatMXN(opcion.precio_mxn) + (opcion.operacion === "renta" ? " / mes" : "");
   return (
     <Card interactiva={false} className={s.tarjeta}>
@@ -164,6 +214,7 @@ function TarjetaOpcion({ opcion }: { opcion: RecomendacionEjemplo }) {
       <p className={s.tarjetaMeta}>
         {opcion.colonia} · <strong>{precio}</strong>
       </p>
+      {opcion.porQue && <p className={s.dato}>{opcion.porQue}</p>}
       <ul className={s.chips}>
         {opcion.chips.map((c) => (
           <li key={c.texto}>
@@ -177,6 +228,13 @@ function TarjetaOpcion({ opcion }: { opcion: RecomendacionEjemplo }) {
           Fuente: {opcion.datoComunidad.fuente} ({opcion.datoComunidad.fecha_dato})
         </span>
       </p>
+      {opcion.avisos && opcion.avisos.length > 0 && (
+        <ul className={s.avisos}>
+          {opcion.avisos.map((a) => (
+            <li key={a}>{a}</li>
+          ))}
+        </ul>
+      )}
     </Card>
   );
 }

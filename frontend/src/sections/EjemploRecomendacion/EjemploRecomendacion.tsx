@@ -1,32 +1,16 @@
-import { useEffect, useState } from "react";
 import { useClient } from "../../client/useClient";
 import type { RecomendacionEjemplo } from "../../domain";
 import { XoloScene } from "../../illustrations";
 import { formatMXN } from "../../lib/format";
 import { RUTAS } from "../../rutas";
 import { Button, Card, Chip, Pill, Reveal } from "../../ui";
+import { useCarga, type Carga } from "../Colonias/useCarga";
 import { IlustracionDepa } from "./IlustracionDepa";
 import s from "./EjemploRecomendacion.module.css";
 
-type Estado =
-  | { tipo: "cargando" }
-  | { tipo: "error" }
-  | { tipo: "listo"; ejemplo: RecomendacionEjemplo };
-
 export function EjemploRecomendacion() {
   const client = useClient();
-  const [estado, setEstado] = useState<Estado>({ tipo: "cargando" });
-
-  useEffect(() => {
-    let vivo = true;
-    client
-      .obtenerEjemplo()
-      .then((ejemplo) => vivo && setEstado({ tipo: "listo", ejemplo }))
-      .catch(() => vivo && setEstado({ tipo: "error" }));
-    return () => {
-      vivo = false;
-    };
-  }, [client]);
+  const estado = useCarga((c) => c.obtenerEjemplo());
 
   return (
     <section id="ejemplo" aria-labelledby="ejemplo-titulo" className="contenedor seccion">
@@ -86,7 +70,7 @@ function ChatMock() {
   );
 }
 
-function TarjetaRecomendacion({ estado }: { estado: Estado }) {
+function TarjetaRecomendacion({ estado }: { estado: Carga<RecomendacionEjemplo> }) {
   if (estado.tipo === "cargando") {
     return (
       <Card interactiva={false} className={s.tarjeta} aria-busy="true">
@@ -98,12 +82,15 @@ function TarjetaRecomendacion({ estado }: { estado: Estado }) {
   if (estado.tipo === "error") {
     return (
       <Card interactiva={false} className={s.tarjeta} role="status">
-        <p className="t-small">No pudimos cargar el ejemplo. Intenta recargar la página.</p>
+        <p className="t-small">{estado.mensaje}</p>
+        <Button variante="secundario" onClick={estado.reintentar}>
+          Reintentar
+        </Button>
       </Card>
     );
   }
 
-  const { ejemplo } = estado;
+  const ejemplo = estado.datos;
   return (
     <Card interactiva={false} className={s.tarjeta}>
       <IlustracionDepa className={s.ilustracion} />

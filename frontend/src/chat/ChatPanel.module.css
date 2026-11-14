@@ -80,6 +80,27 @@
 .dato { font-size: 14px; line-height: 20px; }
 .fuente { color: var(--ink-muted); }
 
+/* Supuestos, avisos y fuentes: discretos pero legibles */
+.supuestos {
+  max-width: 520px;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border-left: 3px solid var(--line);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  line-height: 20px;
+}
+.supuestosTitulo { font-weight: 600; }
+.supuestos ul, .avisos, .fuentes { padding-left: var(--sp-4); }
+.cierre {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  max-width: 520px;
+}
+.avisos { font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.fuentes { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+
 /* Sugerencias: pills discretas (el tezontle se reserva al botón primario) */
 .acciones { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 .sugerencia {

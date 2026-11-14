@@ -1,4 +1,4 @@
-import type { PerfilRapido, RecomendacionEjemplo, ResultadoBusqueda } from "../domain";
+import type { Fuente, OpcionBusqueda, PerfilRapido, ResultadoBusqueda } from "../domain";
 import {
   ETIQUETA_TEMA,
   FUERA_DE_GUION,
@@ -20,21 +20,30 @@ export type Intencion =
 // `contador` genera ids de mensaje deterministas (sin Date.now ni Math.random).
 export type EstadoChat =
   | { fase: "inicio"; contador: number }
-  | { fase: "resultados"; contador: number; perfil: PerfilRapido; opciones: RecomendacionEjemplo[]; indice: number }
+  | { fase: "resultados"; contador: number; perfil: PerfilRapido; opciones: OpcionBusqueda[]; indice: number }
   | {
       fase: "explicando";
       contador: number;
       perfil: PerfilRapido;
-      opciones: RecomendacionEjemplo[];
+      opciones: OpcionBusqueda[];
       indice: number;
       tema: Tema;
     };
+
+/** Lo que va al final de los resultados: avisos generales, fuentes y alternativas. */
+export interface CierreResultados {
+  avisos: string[];
+  fuentes: Fuente[];
+  alternativas?: string;
+}
 
 export interface Mensaje {
   id: string;
   autor: "usuario" | "agente";
   texto: string;
-  tarjeta?: RecomendacionEjemplo;
+  supuestos?: string[]; // "Asumimos que…", antes de las opciones
+  tarjeta?: OpcionBusqueda;
+  cierre?: CierreResultados;
   sugerencias?: Intencion[];
 }
 
@@ -74,11 +83,19 @@ export function etiquetaIntencion(i: Intencion): string {
 }
 
 export function iniciar(perfil: PerfilRapido, resultado: ResultadoBusqueda): Paso {
+  const supuestos = resultado.supuestos;
+  const cierre: CierreResultados = {
+    avisos: resultado.avisos,
+    fuentes: resultado.fuentes,
+    alternativas: resultado.alternativas?.explicacion,
+  };
   if (resultado.opciones.length === 0) {
     const { mensajes, contador } = numerar(0, [
       {
         autor: "agente",
         texto: resultado.mensajeSinResultados ?? "No encontré opciones de ejemplo para esa búsqueda.",
+        supuestos,
+        cierre,
         sugerencias: [{ tipo: "reiniciar" }],
       },
     ]);
@@ -95,10 +112,17 @@ export function iniciar(perfil: PerfilRapido, resultado: ResultadoBusqueda): Pas
       autor: "agente",
       texto: (
         resultado.opciones.length === 1
+<<<<<<< Updated upstream
           ? `Encontré 1 opción${deEjemplo} para ti. ${nota}`
           : `Encontré ${resultado.opciones.length} opciones${deEjemplo} para ti. Esta es la primera. ${nota}`
       ).trim(),
+=======
+          ? `Encontré 1 opción de ejemplo para ti. ${NOTA_FILTRO}`
+          : `Encontré ${resultado.opciones.length} opciones de ejemplo para ti. Esta es la primera. ${NOTA_FILTRO}`,
+      supuestos,
+>>>>>>> Stashed changes
       tarjeta: resultado.opciones[0],
+      cierre,
       sugerencias: sugerenciasDe(),
     },
   ]);
