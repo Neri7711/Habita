@@ -121,5 +121,19 @@
     bottom: calc(var(--sp-4) + env(safe-area-inset-bottom, 0px));
     height: 48px;
     padding: 0 24px;
+    /* Oculto (y fuera del orden de tabulación) hasta pasar el primer pantallazo. */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
   }
+  .flotanteVisible {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
+  }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .flotante { transform: none; }
 }

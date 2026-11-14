@@ -16,7 +16,7 @@ describe("scriptedChat", () => {
   });
 
   it("iniciar sin resultados se queda en 'inicio' y ofrece reiniciar", () => {
-    const { estado, mensajes } = iniciar(perfil, { opciones: [], mensajeSinResultados: "nada" });
+    const { estado, mensajes } = iniciar(perfil, { opciones: [], mensajeSinResultados: "nada", avisos: [], fuentes: [], supuestos: [] });
     expect(estado.fase).toBe("inicio");
     expect(mensajes[0].sugerencias).toEqual([{ tipo: "reiniciar" }]);
   });

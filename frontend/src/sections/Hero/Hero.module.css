@@ -3,8 +3,9 @@
   position: relative;
   isolation: isolate;
   margin-top: calc(var(--navbar-alto) * -1);
-  margin-bottom: calc(var(--seccion) / 2);
   padding-top: calc(var(--navbar-alto) + var(--sp-2));
+  /* Padding (no margin) para que, arriba del todo, el cielo llegue hasta la banda siguiente sin franja gris. */
+  padding-bottom: calc(var(--seccion) / 2);
 }
 
 /* Cielo liso. --progreso (0→1, lo escribe useProgresoScroll) lo recorta de sangre completa a la caja
@@ -17,8 +18,8 @@
   --p: var(--progreso, 0);
   --lado: max(var(--pad-x), (100% - var(--contenedor)) / 2);
   clip-path: inset(
-    calc(var(--p) * (var(--navbar-alto) + var(--sp-2))) calc(var(--p) * var(--lado)) 0
-      round calc(var(--p) * var(--r-lg))
+    calc(var(--p) * (var(--navbar-alto) + var(--sp-2))) calc(var(--p) * var(--lado))
+      calc(var(--p) * var(--seccion) / 2) round calc(var(--p) * var(--r-lg))
   );
 }
 
@@ -158,6 +159,15 @@
   .tarjeta {
     right: 0;
     bottom: calc(var(--sp-4) * -1);
+  }
+}
+
+/* 1024–1199: la imagen es chica y la card taparía Coyoacán y al Xolo; va debajo, alineada a la derecha. */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .tarjeta {
+    position: static;
+    width: fit-content;
+    margin: var(--sp-3) 0 0 auto;
   }
 }
 

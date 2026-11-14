@@ -5,12 +5,15 @@ import type {
   RecomendacionEjemplo,
   ResultadoBusqueda,
   StatsLanding,
+  ZonaTrabajo,
 } from "../domain";
+import { ZONAS_TRABAJO } from "../domain";
 import { buscarOpciones } from "../mocks/buscarOpciones";
 import { COLONIAS } from "../mocks/colonias";
 import { FAQ } from "../mocks/faq";
 import { CATALOGO, EJEMPLO } from "../mocks/recomendaciones";
 import { ANUNCIOS_PROVISIONAL } from "../mocks/stats";
+import { ErrorApi } from "./ErrorApi";
 import type { HabitaClient } from "./HabitaClient";
 
 export interface MockOpciones {
@@ -31,12 +34,16 @@ export class MockHabitaClient implements HabitaClient {
   private responder<T>(valor: () => T): Promise<T> {
     return new Promise((resolve, reject) => {
       const terminar = () => {
-        if (this.fallar) reject(new Error("Fallo simulado del cliente mock"));
+        if (this.fallar) reject(new ErrorApi("Fallo simulado del cliente mock."));
         else resolve(valor());
       };
       if (this.latenciaMs > 0) setTimeout(terminar, this.latenciaMs);
       else terminar();
     });
+  }
+
+  listarZonas(): Promise<ZonaTrabajo[]> {
+    return this.responder(() => [...ZONAS_TRABAJO]);
   }
 
   listarColonias(): Promise<ColoniaResumen[]> {

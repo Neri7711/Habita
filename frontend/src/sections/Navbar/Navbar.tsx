@@ -11,8 +11,12 @@ const ENLACES = [
   { to: RUTAS.preguntas, texto: "Preguntas" },
 ];
 
+const UMBRAL_FLOTANTE = 320;
+
 export function Navbar() {
   const scrolled = useScrolled();
+  // El "Hablar" flotante (móvil) aparece tras el primer pantallazo: arriba ya están los CTAs del hero/encabezado.
+  const conFlotante = useScrolled(UMBRAL_FLOTANTE);
   const { pathname } = useLocation();
   const [abierto, setAbierto] = useState(false);
   const botonRef = useRef<HTMLButtonElement>(null);
@@ -69,7 +73,11 @@ export function Navbar() {
       </div>
 
       {pathname !== RUTAS.buscar && (
-        <Link to={RUTAS.buscar} className={`${s.hablar} ${s.flotante}`} onClick={cerrar}>
+        <Link
+          to={RUTAS.buscar}
+          className={[s.hablar, s.flotante, conFlotante && s.flotanteVisible].filter(Boolean).join(" ")}
+          onClick={cerrar}
+        >
           Hablar
         </Link>
       )}
