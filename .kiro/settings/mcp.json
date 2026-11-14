@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "arraigo": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "C:\\Users\\emanu\\OneDrive\\Documentos\\Habita",
+        "run",
+        "python",
+        "-m",
+        "arraigo.agente.mcp_server"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "buscar_inmuebles",
+        "costo_real",
+        "precio_justo",
+        "score_fraude",
+        "info_colonia",
+        "alternativas_equilibradas"
+      ]
+    }
+  }
+}
